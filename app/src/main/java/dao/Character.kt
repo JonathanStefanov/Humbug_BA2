@@ -1,4 +1,4 @@
-package com.example.humbug
+package dao
 
 abstract class Character(var position : Array<Int>) {
 

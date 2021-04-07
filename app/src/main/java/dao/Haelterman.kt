@@ -1,4 +1,4 @@
-package com.example.humbug
+package dao
 
 class Haelterman(position: Array<Int>, override val squarePerMove: Int = 3) : Character(position) {
 
@@ -16,10 +16,4 @@ class Haelterman(position: Array<Int>, override val squarePerMove: Int = 3) : Ch
         position[0] = position[0] + squarePerMove
     }
 
-
-    fun move(dir: String){
-        if(dir == "left"){
-
-        }
-    }
 }
