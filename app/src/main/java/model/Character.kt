@@ -1,6 +1,8 @@
 package dao
 
-abstract class Character(var position : Array<Int>) {
+import dao.Position;
+
+abstract class Character(var position : Position) {
 
     abstract val squarePerMove: Int
 
