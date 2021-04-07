@@ -1,6 +1,4 @@
-package dao
-
-import dao.Level
+package model
 
 class GlobalVarables(level: Level) {
 

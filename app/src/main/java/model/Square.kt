@@ -1,6 +1,4 @@
-package dao
-
-import dao.Obstacle
+package model
 
 abstract class Square(obstacle: Obstacle?) {
 

@@ -1,4 +1,4 @@
-package dao
+package model
 
 class StarSquare(obstacle: Obstacle?) : Square(obstacle) {
     fun toGrass(){

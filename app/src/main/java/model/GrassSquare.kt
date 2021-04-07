@@ -1,7 +1,4 @@
-package dao
-
-import dao.Obstacle
-import dao.Square
+package model
 
 class GrassSquare(obstacle: Obstacle?) : Square(obstacle){
     override fun actionOnSquare() {}

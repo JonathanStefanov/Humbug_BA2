@@ -1,15 +1,9 @@
 package com.example.humbug
 
-import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Rect
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RectShape
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import dao.GrassSquare
-import dao.StarSquare
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

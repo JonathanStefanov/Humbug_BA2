@@ -1,7 +1,4 @@
-package dao
-
-import dao.Obstacle
-import dao.Square
+package model
 
 class EmptySquare(obstacle: Obstacle) : Square(obstacle) {
 
