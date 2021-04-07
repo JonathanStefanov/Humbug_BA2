@@ -1,6 +1,6 @@
 package com.example.humbug
 
-class Haelterman(override var position: Array<Int>, override val squarePerMove: Int = 3) : Character() {
+class Haelterman(position: Array<Int>, override val squarePerMove: Int = 3) : Character(position) {
 
 
     override fun moveTop(){
@@ -14,5 +14,12 @@ class Haelterman(override var position: Array<Int>, override val squarePerMove: 
     }
     override fun moveRight(){
         position[0] = position[0] + squarePerMove
+    }
+
+
+    fun move(dir: String){
+        if(dir == "left"){
+
+        }
     }
 }
