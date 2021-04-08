@@ -6,8 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.SurfaceView
-import model.Global
-import model.Square
+import model.Game
 
 class DrawingView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null,
                                              defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr){
@@ -21,8 +20,16 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
         canvas?.drawRect(0F, 0F, width.toFloat(), height.toFloat(),
             backgroundPaint)
 
+        for(YSquares in Game.levels[Game.currentLevel].board.squares){
+            for(XSquares in YSquares){
+                XSquares.draw(canvas)
+            }
+        }
 
-        Global.level0.board.squares[0][1].draw(canvas)
+        for(character in Game.levels[Game.currentLevel].characters){
+            character.draw(canvas)
+
+        }
         //Global.level0.board.squares[0][1].draw(canvas)
 
 
@@ -36,4 +43,6 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
 
 
     }
+
+
 }
