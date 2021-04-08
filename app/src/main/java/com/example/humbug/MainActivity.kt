@@ -1,19 +1,27 @@
 package com.example.humbug
 
-import android.graphics.Canvas
-import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
+import androidx.appcompat.app.AppCompatActivity
+import model.Global
+
 
 class MainActivity : AppCompatActivity() {
+    lateinit var drawingView: DrawingView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val canvas = Canvas()
-        canvas.drawRect(
-            Rect(startX, topY, endX, bottomY),
-            paint)
+        val displayMetrics = DisplayMetrics()
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
+
+        Global.screenHeight = height
+        Global.screenWidth = width
+        drawingView = findViewById(R.id.vMain)
+        drawingView.setWillNotDraw(false)
+        drawingView.invalidate()
+
 
         /*val p1 = Haelterman(arrayOf<Int>(0,0))
         p1.moveTop()

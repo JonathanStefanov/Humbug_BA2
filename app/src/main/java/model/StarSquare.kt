@@ -1,6 +1,6 @@
 package model
 
-class StarSquare(obstacle: Obstacle?) : Square(obstacle) {
+class StarSquare(obstacle: Obstacle?, position: Position) : Square(obstacle, position) {
     fun toGrass(){
         // TODO: Changer le square dans le board
     }
