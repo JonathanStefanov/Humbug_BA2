@@ -1,4 +1,4 @@
-package com.example.humbug
+package com.example.view
 
 import org.junit.Test
 

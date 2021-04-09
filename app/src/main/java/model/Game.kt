@@ -11,15 +11,26 @@ public class Game : Application() {
             status = LevelStatus.IN_PROGRESS,
             board = Board(
                 arrayOf(
-                    arrayOf(Square(null, Position(0,0)), Square(null, Position(1,0)), Square(null, Position(2,0)), Square(null, Position(3,0)), Square(null, Position(4,0))),
-                    arrayOf(Square(null, Position(0,1)), Square(null, Position(1,1)), Square(null, Position(2,1)), Square(null, Position(3,1)), Square(null, Position(4,1))),
-                    arrayOf(Square(null, Position(0,2)), Square(null, Position(1,2)), Square(null, Position(2,2)), Square(null, Position(3,2)), Square(null, Position(4,2))),
-                    arrayOf(Square(null, Position(0,3)), Square(null, Position(1,3)), Square(null, Position(2,3)), Square(null, Position(3,3)), Square(null, Position(4,3))),
-                    arrayOf(Square(null, Position(0,4)), Square(null, Position(1,4)), Square(null, Position(2,4)), Square(null, Position(3,4)), Square(null, Position(4,4))),
-                    arrayOf(Square(null, Position(0,5)), StarSquare(null, Position(1,5)), Square(null, Position(2,5)), Square(null, Position(3,5)), Square(null, Position(4,5)))
+                    arrayOf(Square(), Square(), Square(), null, Square()),
+                    arrayOf(Square(), Square(), Square(), null, Square()),
+                    arrayOf(Square(), Square(), Square(), Square(), Square()),
+                    arrayOf(Square(), Square(), Square(), null, Square()),
+                    arrayOf(Square(), Square(), Square(), null, Square()),
+                    arrayOf(Square(), Square(SquareType.STAR), Square(), null, Square())
+
+                    )
+            ))
+            /*Board(
+                arrayOf(
+                    arrayOf(Square(null, Position(0,0), SquareType.GRASS), Square(null, Position(1,0), SquareType.GRASS), Square(null, Position(2,0), SquareType.GRASS), null, Square(null, Position(4,0), SquareType.GRASS)),
+                    arrayOf(Square(null, Position(0,1), SquareType.GRASS), Square(null, Position(1,1), SquareType.GRASS), Square(null, Position(2,1), SquareType.GRASS), Square(null, Position(3,1), SquareType.STAR), Square(null, Position(4,1), SquareType.GRASS)),
+                    arrayOf(Square(null, Position(0,2), SquareType.GRASS), Square(null, Position(1,2), SquareType.GRASS), Square(null, Position(2,2), SquareType.GRASS), Square(null, Position(3,2), SquareType.GRASS), Square(null, Position(4,2), SquareType.GRASS)),
+                    arrayOf(Square(null, Position(0,3), SquareType.GRASS), Square(null, Position(1,3), SquareType.GRASS), Square(null, Position(2,3), SquareType.GRASS), Square(null, Position(3,3), SquareType.GRASS), Square(null, Position(4,3), SquareType.GRASS)),
+                    arrayOf(null, Square(null, Position(1,4), SquareType.GRASS), Square(null, Position(2,4), SquareType.GRASS), Square(null, Position(3,4), SquareType.GRASS), Square(null, Position(4,4), SquareType.GRASS)),
+                    arrayOf(Square(null, Position(0,5), SquareType.GRASS), Square(null, Position(1,5), SquareType.STAR), Square(null, Position(2,5), SquareType.GRASS), Square(null, Position(3,5), SquareType.GRASS), Square(null, Position(4,5), SquareType.GRASS))
                 )
             )
-        )
+        )*/
 
         var screenHeight = 500
         var screenWidth = 200

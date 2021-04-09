@@ -7,11 +7,11 @@ import android.graphics.RectF
 import android.util.Log
 
 class Haelterman(override var position : Position) : Character(position) {
-    private val paint = Paint()
     private var color = Color.BLUE
 
     override lateinit var shape: RectF
     override fun draw(canvas: Canvas?) {
+        val paint = Paint()
         shape = RectF(
             position.convertPositionToScreen(position)[0],
             position.convertPositionToScreen(position)[1],
