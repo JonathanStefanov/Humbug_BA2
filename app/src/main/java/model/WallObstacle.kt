@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 
-class WallObstacle(var direction: Direction, var obstacleType: ObstacleType = ObstacleType.WALL) : Obstacle(obstacleType) {
+class WallObstacle(override var direction: Direction, override var obstacleType: ObstacleType = ObstacleType.WALL) : Obstacle(obstacleType, direction) {
 
     override fun draw(canvas: Canvas?, position: Position){
         val paint = Paint()
