@@ -11,12 +11,12 @@ public class Game : Application() {
             status = LevelStatus.IN_PROGRESS,
             board = Board(
                 arrayOf(
-                    arrayOf(Square(), Square(), Square(), null, Square()),
-                    arrayOf(Square(), Square(), Square(), null, Square()),
+                    arrayOf(Square(), Square(obstacle = WallObstacle(Direction.DOWN)), Square(), null, Square()),
+                    arrayOf(Square(), Square(), Square(obstacle = WallObstacle(Direction.LEFT)), null, Square()),
                     arrayOf(Square(), Square(), Square(), Square(), Square()),
                     arrayOf(Square(), Square(), Square(), null, Square()),
                     arrayOf(Square(), Square(), Square(), null, Square()),
-                    arrayOf(Square(), Square(SquareType.STAR), Square(), null, Square())
+                    arrayOf(Square(), Square(squareType = SquareType.STAR), Square(), null, Square())
 
                     )
             ))

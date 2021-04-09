@@ -14,10 +14,10 @@ class Haelterman(override var position : Position) : Character(position) {
     override fun draw(canvas: Canvas?) {
         val paint = Paint()
         shape = RectF(
-            position.convertPositionToScreen(position)[0],
-            position.convertPositionToScreen(position)[1],
-            position.convertPositionToScreen(position)[0] + 200f,
-            position.convertPositionToScreen(position)[1] + 200f
+            position.convertPositionToScreen()[0],
+            position.convertPositionToScreen()[1],
+            position.convertPositionToScreen()[0] + 200f,
+            position.convertPositionToScreen()[1] + 200f
         )
         paint.color = color
         canvas?.drawOval(shape, paint)

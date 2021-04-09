@@ -1,5 +1,7 @@
 package model
 
-abstract class Obstacle{
-    abstract fun actionOnObstacle()
+import android.graphics.Canvas
+
+abstract class Obstacle(obstacleType: ObstacleType){
+    abstract fun draw(canvas: Canvas?, position: Position)
 }
