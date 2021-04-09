@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.Log
+import com.example.view.DrawingView
 
 class Haelterman(override var position : Position) : Character(position) {
     private var color = Color.BLUE
@@ -23,8 +24,17 @@ class Haelterman(override var position : Position) : Character(position) {
     }
 
 
-    override fun move(direction : Direction){
-        Log.d("LOGJ ", "te")
+    override fun move(direction : Direction, drawingView: DrawingView){
+
+        Log.d("LOL", "supposed : " + direction.name)
+        when(direction){
+            Direction.UP -> this.position.y = this.position.y - 1
+            Direction.DOWN -> this.position.y = this.position.y + 1
+            Direction.LEFT -> this.position.x = this.position.x - 1
+            Direction.RIGHT -> this.position.x = this.position.x + 1
+        }
+        drawingView.invalidate()
+
 
     }
 

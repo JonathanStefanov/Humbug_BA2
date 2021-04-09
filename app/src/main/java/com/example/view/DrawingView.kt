@@ -15,8 +15,6 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
                                              defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr){
     val backgroundPaint = Paint()
     //var square1: Square = Square(null)
-    var i = 0
-    var j = 0
 
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
