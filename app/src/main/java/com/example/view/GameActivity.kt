@@ -12,7 +12,7 @@ import model.Game
 import kotlin.math.abs
 
 
-class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
+class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     lateinit var drawingView: DrawingView
     lateinit var gestureDetector: GestureDetector
     var x1: Float = 0.0f
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.game_activity)
 
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
