@@ -1,11 +1,20 @@
 package model
 
+import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.view.DrawingView
+import com.example.view.GameActivity
+import com.example.view.R
 
 class Haelterman(override var position : Position) : Character(position) {
     private var color = Color.BLUE
@@ -32,71 +41,47 @@ class Haelterman(override var position : Position) : Character(position) {
             else -> return null
         }
     }
-    override fun move(direction : Direction, drawingView: DrawingView){
-/*
-        Log.d("LOL", "supposed : " + direction.name)
-        Log.d("LOL", "this square : " + Game.levels[Game.currentLevel].board.getSquareFromPosition(this.position)?.obstacle?.direction?.name)
-        var nextPosition: Position = position
-        when(direction){
-            Direction.UP -> nextPosition.y = nextPosition.y - 1
-            Direction.DOWN -> nextPosition.y = nextPosition.y + 1
-            Direction.LEFT -> nextPosition.x = nextPosition.x - 1
-            Direction.RIGHT -> nextPosition.x = nextPosition.x + 1
-        }
-        Log.d("LOL", "this square : " + getOppositeDirection(Game.levels[Game.currentLevel].board.getSquareFromPosition(nextPosition)?.obstacle?.direction)?.name)
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun move(direction : Direction, drawingView: DrawingView, gameActivity: GameActivity){
 
-        when(direction){
-            Direction.UP -> this.position.y = this.position.y - 1
-            Direction.DOWN -> this.position.y = this.position.y + 1
-            Direction.LEFT -> this.position.x = this.position.x - 1
-            Direction.RIGHT -> this.position.x = this.position.x + 1
+        // Computing the desired position and checking the outcome
+        val nextPosition: Position =  when(direction){
+            Direction.UP -> Position(position.x, position.y - 1)
+            Direction.DOWN -> Position(position.x, position.y + 1)
+            Direction.LEFT -> Position(position.x - 1, position.y)
+            Direction.RIGHT -> Position(position.x + 1, position.y)
+        }
+
+        val currentSquare: Square? = Game.levels[Game.currentLevel].board.getSquareFromPosition(position)
+        val nextSquare: Square? = Game.levels[Game.currentLevel].board.getSquareFromPosition(nextPosition)
+        if(currentSquare != null)
+        {
+            // There is a square where user wants to go
+            if(currentSquare.obstacle?.direction != direction &&
+                getOppositeDirection(nextSquare?.obstacle?.direction) != direction){
+                // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
+                this.position = nextPosition // Updating position
+
+
+            }
+            else{
+                // User hurt a wall, phones vibrates and user does not move
+                val vibrator = gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                if (Build.VERSION.SDK_INT >= 26) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                } else {
+                    vibrator.vibrate(200)
+                }
+            }
+        }
+        else{
+            // Showing dead message and putting the character in -1, -1 so it is invisible
+            val builder =AlertDialog.Builder(gameActivity)
+            builder.setMessage(R.string.dialog_character_fallen_message)
+                .setTitle(R.string.dialog_character_fallen_title).show();
+            this.position = Position(-1, -1)
         }
         drawingView.invalidate()
-*/
-        //for(i in 0..3){
-            // Check if we can move out of our own square
-            if(Game.levels[Game.currentLevel].board.getSquareFromPosition(this.position)?.obstacle?.direction != direction){
-                // Check if next square will be valid too
-                var nextPosition: Position = position
-                when(direction){
-                    Direction.UP -> nextPosition.y = nextPosition.y - 1
-                    Direction.DOWN -> nextPosition.y = nextPosition.y + 1
-                    Direction.LEFT -> nextPosition.x = nextPosition.x - 1
-                    Direction.RIGHT -> nextPosition.x = nextPosition.x + 1
-                }
-                Log.d("LOL", "this square : " + getOppositeDirection(Game.levels[Game.currentLevel].board.getSquareFromPosition(nextPosition)?.obstacle?.direction)?.name)
-                // If next square has a square with the opposite direction, not go
-                if(getOppositeDirection(Game.levels[Game.currentLevel].board.getSquareFromPosition(nextPosition)?.obstacle?.direction) != direction &&
-                    Game.levels[Game.currentLevel].board.getSquareFromPosition(this.position) != null){
-                    this.position = nextPosition
-                    drawingView.invalidate()
-                }
-            }
-       //}
-
-
-/*
-*                 when(direction){
-                Direction.UP -> this.position.y = this.position.y - 1
-                Direction.DOWN -> this.position.y = this.position.y + 1
-                Direction.LEFT -> this.position.x = this.position.x - 1
-                Direction.RIGHT -> this.position.x = this.position.x + 1
-            }
-* */
-
-
-    /*override fun moveTop(){
-        position[1] = position[1] + squarePerMove
-    }
-    override fun moveBottom(){
-        position[1] = position[1] - squarePerMove
-    }
-    override fun moveLeft(){
-        position[0] = position[0] - squarePerMove
-    }
-    override fun moveRight(){
-        position[0] = position[0] + squarePerMove
-    }*/
 
 }
 }

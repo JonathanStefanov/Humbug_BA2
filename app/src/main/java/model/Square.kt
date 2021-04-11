@@ -6,10 +6,14 @@ import android.graphics.Paint
 import android.graphics.RectF
 
 open class Square(var squareType: SquareType = SquareType.GRASS, var obstacle: Obstacle? = null)  {
-    open fun actionOnSquare(){}
+    open fun actionOnSquare(){
+        if(squareType == SquareType.STAR){ squareType = SquareType.GRASS }
+        obstacle?.actionOnObstacle()
+    }
 
 
     open fun draw(canvas: Canvas?, position: Position){
+        // Canvas: Object on which you draw on the drawinfview
         // Drawing the square
         val paint = Paint()
         var color = 0

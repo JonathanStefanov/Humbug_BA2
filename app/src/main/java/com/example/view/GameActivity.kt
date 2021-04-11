@@ -34,7 +34,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         var height = displayMetrics.heightPixels
         gestureDetector = GestureDetector(this, this)
 
-
         Game.screenHeight = height
         Game.screenWidth = width
         drawingView = findViewById(R.id.vMain)
@@ -138,7 +137,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
 
         if (direction != null) {
-            chosenCharacter?.move(direction, drawingView)
+            chosenCharacter?.move(direction, drawingView, this)
         }
 
 

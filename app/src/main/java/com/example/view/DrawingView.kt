@@ -41,9 +41,10 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
 
 
 
+        // Iteration on the 2D matrix
         Game.levels[Game.currentLevel].board.squares.forEachIndexed { i, arrayOfSquares ->
             arrayOfSquares.forEachIndexed { j, square ->
-                square?.draw(canvas, Position(j,i))
+                square?.draw(canvas, Position(j,i)) // Drawing the squares
             }
         }
         /*
