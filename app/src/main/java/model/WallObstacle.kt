@@ -56,5 +56,9 @@ class WallObstacle(override var direction: Direction, override var obstacleType:
 
     }
 
+    override fun actionOnObstacle() {
+        TODO("Not yet implemented")
+    }
+
 
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Humbug</string>
+    <string name="dialog_character_fallen_message">This is so sad </string>
+    <string name="dialog_character_fallen_title">The character fell!</string>
 </resources>

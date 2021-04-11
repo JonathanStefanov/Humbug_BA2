@@ -13,8 +13,8 @@ public class Game : Application() {
                 arrayOf(
                     arrayOf(Square(), Square(obstacle = WallObstacle(Direction.DOWN)), Square(), null, Square()),
                     arrayOf(Square(), Square(), Square(obstacle = WallObstacle(Direction.LEFT)), null, Square()),
-                    arrayOf(Square(), Square(), Square(), Square(), Square()),
-                    arrayOf(Square(), Square(), Square(), null, Square()),
+                    arrayOf(null, Square(), Square(), Square(), Square()),
+                    arrayOf(null, Square(obstacle = WallObstacle(Direction.RIGHT)), Square(), null, Square()),
                     arrayOf(Square(), Square(), Square(), null, Square()),
                     arrayOf(Square(), Square(squareType = SquareType.STAR), Square(), null, Square())
 
@@ -34,6 +34,8 @@ public class Game : Application() {
 
         var screenHeight = 500
         var screenWidth = 200
+
+        // Getting the spacing by dividing screen seize by matrix size
         var widthSpacing = screenWidth.toFloat()/5
         var heightSpacing = screenHeight.toFloat()/6
         var levels: Array<Level> = arrayOf(level0)
