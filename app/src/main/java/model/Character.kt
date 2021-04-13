@@ -14,7 +14,7 @@ abstract class Character(open var position : Position) {
         drawingView: DrawingView,
         gameActivity: GameActivity
     )
-    abstract fun draw(canvas: Canvas?)
+    abstract fun draw(canvas: Canvas?, drawingView: DrawingView)
     //abstract fun moveTop()
     //abstract fun moveBottom()
     //abstract fun moveLeft()

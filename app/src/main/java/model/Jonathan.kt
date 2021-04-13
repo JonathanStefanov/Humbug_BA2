@@ -2,34 +2,36 @@ package model
 
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.drawable.toDrawable
 import com.example.view.DrawingView
 import com.example.view.GameActivity
 import com.example.view.R
 
-class Haelterman(override var position : Position) : Character(position) {
+
+class Jonathan(override var position : Position) : Character(position) {
     private var color = Color.BLUE
 
     override lateinit var shape: RectF
-    override fun draw(canvas: Canvas?) {
+    override fun draw(canvas: Canvas?, drawingView: DrawingView) {
         val paint = Paint()
-        shape = RectF(
-            position.convertPositionToScreen()[0],
-            position.convertPositionToScreen()[1],
-            position.convertPositionToScreen()[0] + 200f,
-            position.convertPositionToScreen()[1] + 200f
-        )
         paint.color = color
-        canvas?.drawOval(shape, paint)
+
+        val drawable: Drawable = R.drawable.spikes.toDrawable() // Getting the picture
+        var img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.jonathan)
+
+        var x: Float =  position.convertPositionToScreen()[0]
+        var y: Float = position.convertPositionToScreen()[1]
+        val resized = Bitmap.createScaledBitmap(img, 180, 180, true)
+        paint.isFilterBitmap = true;
+        paint.isDither = true;
+        canvas?.drawBitmap(resized, x.toFloat(), y.toFloat(), paint)
+
     }
 
     private fun getOppositeDirection(direction: Direction?): Direction? {
@@ -61,6 +63,7 @@ class Haelterman(override var position : Position) : Character(position) {
                 getOppositeDirection(nextSquare?.obstacle?.direction) != direction){
                 // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
                 this.position = nextPosition // Updating position
+                nextSquare?.actionOnSquare(this) // Action on square
 
 
             }

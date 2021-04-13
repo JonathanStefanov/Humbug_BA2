@@ -4,8 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import com.example.view.DrawingView
 
-class WallObstacle(override var direction: Direction, override var obstacleType: ObstacleType = ObstacleType.WALL) : Obstacle(obstacleType, direction) {
+class WallObstacle(override var direction: Direction?, override var obstacleType: ObstacleType = ObstacleType.WALL) : Obstacle(obstacleType, direction) {
 
     override fun draw(canvas: Canvas?, position: Position){
         val paint = Paint()
@@ -56,9 +57,7 @@ class WallObstacle(override var direction: Direction, override var obstacleType:
 
     }
 
-    override fun actionOnObstacle() {
-        TODO("Not yet implemented")
-    }
+    override fun actionOnObstacle() {}
 
 
 }

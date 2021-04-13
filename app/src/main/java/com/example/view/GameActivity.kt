@@ -74,7 +74,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             if (character.shape.contains(downEvent.rawX,downEvent.rawY )) {
                 Log.d("LOL", "CHAR TOU")
                 Log.d("LOL", "x: ${downEvent.rawX } y: ${downEvent.rawY}")
-
             }
         }*/
 

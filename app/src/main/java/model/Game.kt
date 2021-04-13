@@ -7,12 +7,12 @@ public class Game : Application() {
         var currentLevel: Int = 0
         var level0: Level = Level(5,
             5,
-            characters = arrayOf(Haelterman(Position(2,2))),
+            characters = arrayOf(Jonathan(Position(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
             board = Board(
                 arrayOf(
                     arrayOf(Square(), Square(obstacle = WallObstacle(Direction.DOWN)), Square(), null, Square()),
-                    arrayOf(Square(), Square(), Square(obstacle = WallObstacle(Direction.LEFT)), null, Square()),
+                    arrayOf(Square(), Square(), null, null, Square()),
                     arrayOf(null, Square(), Square(), Square(), Square()),
                     arrayOf(null, Square(obstacle = WallObstacle(Direction.RIGHT)), Square(), null, Square()),
                     arrayOf(Square(), Square(), Square(), null, Square()),
