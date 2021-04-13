@@ -43,7 +43,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         drawingView.invalidate()
 
 
-/*
+
         // Checking which Character is selected
         val radioGroup: RadioGroup = findViewById(R.id.radio_group)
         radioGroup.setOnCheckedChangeListener(
@@ -51,12 +51,12 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 val selectedRadio: RadioButton = findViewById(checkedId)
                 // Change selected character dynamically
                 when(selectedRadio.text){
-                    "Alain" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[1]
-                    "Jonathan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
+                    "Alain" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
+                    "Jonathan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[1]
                 }
 
             })
-*/
+
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
