@@ -60,9 +60,13 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     // Swipe checking
     override fun onFling(moveEvent: MotionEvent, downEvent: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        Log.d("Alain",moveEvent.x.toString());
+        Log.d("Alain",moveEvent.y.toString());
+        Log.d("Alain",downEvent.x.toString());
+        Log.d("Alain",downEvent.y.toString());
         var result: Boolean = false
-        var diffY: Float = moveEvent.y.minus(downEvent.y)
-        var diffX: Float = moveEvent.x.minus(downEvent.x)
+        var diffY: Float = moveEvent.y - (downEvent.y)
+        var diffX: Float = moveEvent.x - (downEvent.x)
         var chosenCharacter: Character? = null
         var direction: Direction? = null
 
@@ -70,7 +74,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             if (character.shape.contains(downEvent.rawX,downEvent.rawY )) {
                 Log.d("LOL", "CHAR TOU")
                 Log.d("LOL", "x: ${downEvent.rawX } y: ${downEvent.rawY}")
-
             }
         }*/
 
@@ -82,11 +85,11 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 if(diffX > 0){
                     // left SWIPE
                     for (character in Game.levels[Game.currentLevel].characters) {
-                        if (character.shape.contains(downEvent.rawX + 200,downEvent.rawY - 300)) {
-                            direction = Direction.LEFT
-                            chosenCharacter = character
+                        Log.d("Alain","left");
+                        direction = Direction.LEFT
+                        chosenCharacter = character
 
-                        }
+
                     }
                     Log.d("LOL", "x: ${downEvent.rawX + 200} y: ${downEvent.rawY - 200 }")
 
@@ -95,10 +98,10 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 else{
                     // rigt SWIPE
                     for (character in Game.levels[Game.currentLevel].characters) {
-                        if (character.shape.contains(downEvent.rawX - 200 ,downEvent.rawY + 300)) {
-                            direction = Direction.RIGHT
-                            chosenCharacter = character
-                        }
+                        Log.d("Alain","right");
+                        direction = Direction.RIGHT
+                        chosenCharacter = character
+
                     }
                     result = true
                 }
@@ -112,10 +115,10 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 if(diffY > 0){
                     // UP SWIPE
                     for (character in Game.levels[Game.currentLevel].characters) {
-                        if (character.shape.contains(downEvent.rawX,downEvent.rawY )) {
-                            chosenCharacter = character
-                            direction = Direction.UP
-                        }
+                        Log.d("Alain","up");
+                        chosenCharacter = character
+                        direction = Direction.UP
+
                     }
                     result = true
                 }
@@ -123,10 +126,10 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                     // DOWN SWIPE
                     Log.d("LOL", "down")
                     for (character in Game.levels[Game.currentLevel].characters) {
-                        if (character.shape.contains(downEvent.rawX,downEvent.rawY -500  )) {
-                            direction = Direction.DOWN
-                            chosenCharacter = character
-                        }
+                        Log.d("Alain","down");
+                        direction = Direction.DOWN
+                        chosenCharacter = character
+
                     }
                     Log.d("LOL", "x: ${downEvent.rawX } y: ${downEvent.rawY - 500}")
                     result = true

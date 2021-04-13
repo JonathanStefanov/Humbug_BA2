@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.SurfaceView
 import model.Game
 import model.Position
@@ -55,7 +54,7 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
         }*/
 
         for(character in Game.levels[Game.currentLevel].characters){
-            character.draw(canvas)
+            character.draw(canvas, this)
 
         }
         //Global.level0.board.squares[0][1].draw(canvas)
