@@ -5,6 +5,8 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import model.Character
 import model.Direction
@@ -40,6 +42,21 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         drawingView.setWillNotDraw(false)
         drawingView.invalidate()
 
+
+/*
+        // Checking which Character is selected
+        val radioGroup: RadioGroup = findViewById(R.id.radio_group)
+        radioGroup.setOnCheckedChangeListener(
+            RadioGroup.OnCheckedChangeListener { _, checkedId ->
+                val selectedRadio: RadioButton = findViewById(checkedId)
+                // Change selected character dynamically
+                when(selectedRadio.text){
+                    "Alain" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[1]
+                    "Jonathan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
+                }
+
+            })
+*/
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -84,25 +101,14 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 // TODO swipe right
                 if(diffX > 0){
                     // left SWIPE
-                    for (character in Game.levels[Game.currentLevel].characters) {
-                        Log.d("Alain","left");
-                        direction = Direction.LEFT
-                        chosenCharacter = character
-
-
-                    }
+                    direction = Direction.LEFT
                     Log.d("LOL", "x: ${downEvent.rawX + 200} y: ${downEvent.rawY - 200 }")
 
                     result = true
                 }
                 else{
                     // rigt SWIPE
-                    for (character in Game.levels[Game.currentLevel].characters) {
-                        Log.d("Alain","right");
-                        direction = Direction.RIGHT
-                        chosenCharacter = character
-
-                    }
+                    direction = Direction.RIGHT
                     result = true
                 }
 
@@ -114,23 +120,13 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             if(abs(diffY) > 100 && abs(velocityY) > 100){
                 if(diffY > 0){
                     // UP SWIPE
-                    for (character in Game.levels[Game.currentLevel].characters) {
-                        Log.d("Alain","up");
-                        chosenCharacter = character
-                        direction = Direction.UP
-
-                    }
+                    direction = Direction.UP
                     result = true
                 }
                 else{
                     // DOWN SWIPE
                     Log.d("LOL", "down")
-                    for (character in Game.levels[Game.currentLevel].characters) {
-                        Log.d("Alain","down");
-                        direction = Direction.DOWN
-                        chosenCharacter = character
-
-                    }
+                    direction = Direction.DOWN
                     Log.d("LOL", "x: ${downEvent.rawX } y: ${downEvent.rawY - 500}")
                     result = true
                 }
@@ -140,7 +136,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
 
         if (direction != null) {
-            chosenCharacter?.move(direction, drawingView, this)
+            Game.selectedCharacter.move(direction, drawingView, this)
         }
 
 

@@ -4,10 +4,10 @@ import android.app.Application
 public class Game : Application() {
     companion object {
         @JvmField
-        var currentLevel: Int = 0
+        
         var level0: Level = Level(5,
             5,
-            characters = arrayOf(Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(Position(2, 4)), Jonathan(Position(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
             board = Board(
                 arrayOf(
@@ -31,14 +31,16 @@ public class Game : Application() {
                 )
             )
         )*/
-
+        var selectedLevel: Int = 0
+        var levels: Array<Level> = arrayOf(level0)
+        var selectedCharacter: Character = levels[selectedLevel].characters[0]
         var screenHeight = 500
         var screenWidth = 200
 
         // Getting the spacing by dividing screen seize by matrix size
         var widthSpacing = screenWidth.toFloat()/5
         var heightSpacing = screenHeight.toFloat()/6
-        var levels: Array<Level> = arrayOf(level0)
+
 
 
     }

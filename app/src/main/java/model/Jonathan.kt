@@ -15,19 +15,16 @@ import com.example.view.R
 
 
 class Jonathan(override var position : Position) : Character(position) {
-    private var color = Color.BLUE
 
-    override lateinit var shape: RectF
     override fun draw(canvas: Canvas?, drawingView: DrawingView) {
         val paint = Paint()
-        paint.color = color
 
         val drawable: Drawable = R.drawable.spikes.toDrawable() // Getting the picture
-        var img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.jonathan)
+        val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.jonathan)
 
-        var x: Float =  position.convertPositionToScreen()[0]
-        var y: Float = position.convertPositionToScreen()[1]
-        val resized = Bitmap.createScaledBitmap(img, 180, 180, true)
+        val x: Float =  position.convertPositionToScreen()[0] - 20f
+        val y: Float = position.convertPositionToScreen()[1] - 20f
+        val resized = Bitmap.createScaledBitmap(img, 220, 220, true)
         paint.isFilterBitmap = true;
         paint.isDither = true;
         canvas?.drawBitmap(resized, x.toFloat(), y.toFloat(), paint)
@@ -54,8 +51,8 @@ class Jonathan(override var position : Position) : Character(position) {
             Direction.RIGHT -> Position(position.x + 1, position.y)
         }
 
-        val currentSquare: Square? = Game.levels[Game.currentLevel].board.getSquareFromPosition(position)
-        val nextSquare: Square? = Game.levels[Game.currentLevel].board.getSquareFromPosition(nextPosition)
+        val currentSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
+        val nextSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
         if(currentSquare != null)
         {
             // There is a square where user wants to go

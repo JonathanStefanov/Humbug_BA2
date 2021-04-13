@@ -8,7 +8,6 @@ abstract class Character(open var position : Position) {
 
     //abstract val squarePerMove: Int
 
-    abstract var shape: RectF
     abstract fun move(
         direction: Direction,
         drawingView: DrawingView,
