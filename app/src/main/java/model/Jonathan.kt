@@ -15,19 +15,16 @@ import com.example.view.R
 
 
 class Jonathan(override var position : Position) : Character(position) {
-    private var color = Color.BLUE
 
-    override lateinit var shape: RectF
     override fun draw(canvas: Canvas?, drawingView: DrawingView) {
         val paint = Paint()
-        paint.color = color
 
         val drawable: Drawable = R.drawable.spikes.toDrawable() // Getting the picture
-        var img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.jonathan)
+        val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.jonathan)
 
-        var x: Float =  position.convertPositionToScreen()[0]
-        var y: Float = position.convertPositionToScreen()[1]
-        val resized = Bitmap.createScaledBitmap(img, 180, 180, true)
+        val x: Float =  position.convertPositionToScreen()[0] - 20f
+        val y: Float = position.convertPositionToScreen()[1] - 20f
+        val resized = Bitmap.createScaledBitmap(img, 220, 220, true)
         paint.isFilterBitmap = true;
         paint.isDither = true;
         canvas?.drawBitmap(resized, x.toFloat(), y.toFloat(), paint)
@@ -53,17 +50,37 @@ class Jonathan(override var position : Position) : Character(position) {
             Direction.LEFT -> Position(position.x - 1, position.y)
             Direction.RIGHT -> Position(position.x + 1, position.y)
         }
+        var otherCharacterOnNextPosition = false
 
-        val currentSquare: Square? = Game.levels[Game.currentLevel].board.getSquareFromPosition(position)
-        val nextSquare: Square? = Game.levels[Game.currentLevel].board.getSquareFromPosition(nextPosition)
+        val currentSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
+        val nextSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
         if(currentSquare != null)
         {
             // There is a square where user wants to go
             if(currentSquare.obstacle?.direction != direction &&
                 getOppositeDirection(nextSquare?.obstacle?.direction) != direction){
                 // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
-                this.position = nextPosition // Updating position
-                nextSquare?.actionOnSquare(this) // Action on square
+                // Check if there is someone at next position
+                for(character in Game.levels[Game.selectedLevel].characters){
+                    if(character.position == nextPosition){
+                        otherCharacterOnNextPosition = true
+                    }
+                }
+                if(!otherCharacterOnNextPosition){
+                    // User can move!
+                    this.position = nextPosition // Updating position
+                    nextSquare?.actionOnSquare(this) // Action on square
+                }
+                else{
+                    // User hurt a character, phones vibrates and user does not move
+                    val vibrator = gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        vibrator.vibrate(200)
+                    }
+                }
+
 
 
             }
