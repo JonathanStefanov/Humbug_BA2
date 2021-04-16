@@ -1,5 +1,5 @@
 package model
 
 enum class SquareType{
-    GRASS, STAR
+    DEFAULT, TARGET, FLAG
 }

@@ -2,7 +2,10 @@ package model
 
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.VibrationEffect
@@ -13,17 +16,16 @@ import com.example.view.DrawingView
 import com.example.view.GameActivity
 import com.example.view.R
 
-
-class Jonathan(override var position : Position) : Character(position) {
+class Dylan (override var position : Position) : Character(position) {
 
     override fun draw(canvas: Canvas?, drawingView: DrawingView) {
         val paint = Paint()
 
-        val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.jonathan)
+        val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.dylan)
 
-        val x: Float =  position.convertPositionToScreen()[0] - 20f
-        val y: Float = position.convertPositionToScreen()[1] - 20f
-        val resized = Bitmap.createScaledBitmap(img, 220, 220, true)
+        val x: Float =  position.convertPositionToScreen()[0]
+        val y: Float = position.convertPositionToScreen()[1]
+        val resized = Bitmap.createScaledBitmap(img, 190, 220, true)
         paint.isFilterBitmap = true;
         paint.isDither = true;
         canvas?.drawBitmap(resized, x.toFloat(), y.toFloat(), paint)
@@ -95,12 +97,12 @@ class Jonathan(override var position : Position) : Character(position) {
         }
         else{
             // Showing dead message and putting the character in -1, -1 so it is invisible
-            val builder =AlertDialog.Builder(gameActivity)
+            val builder = AlertDialog.Builder(gameActivity)
             builder.setMessage(R.string.dialog_character_fallen_message)
                 .setTitle(R.string.dialog_character_fallen_title).show();
             this.position = Position(-1, -1)
         }
         drawingView.invalidate()
 
-}
+    }
 }

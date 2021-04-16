@@ -6,9 +6,9 @@ import android.graphics.Paint
 import android.graphics.RectF
 import com.example.view.DrawingView
 
-class WallObstacle(override var direction: Direction?, override var obstacleType: ObstacleType = ObstacleType.WALL) : Obstacle(obstacleType, direction) {
+class Wall(override var direction: Direction?, override var obstacleType: ObstacleType = ObstacleType.WALL) : Obstacle(obstacleType, direction) {
 
-    override fun draw(canvas: Canvas?, position: Position){
+    override fun draw(canvas: Canvas?, position: Position, drawingView: DrawingView){
         val paint = Paint()
         var color = Color.GREEN
         // Changing the shape depending on the direction

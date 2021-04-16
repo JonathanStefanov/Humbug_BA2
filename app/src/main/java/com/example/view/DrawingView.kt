@@ -1,5 +1,6 @@
 package com.example.view
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -7,6 +8,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.SurfaceView
+import android.widget.ProgressBar
 import model.Game
 import model.Position
 
@@ -43,7 +45,7 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
         // Iteration on the 2D matrix
         Game.levels[Game.selectedLevel].board.squares.forEachIndexed { i, arrayOfSquares ->
             arrayOfSquares.forEachIndexed { j, square ->
-                square?.draw(canvas, Position(j,i)) // Drawing the squares
+                square?.draw(canvas, Position(j,i), this) // Drawing the squares
             }
         }
         /*
@@ -59,7 +61,13 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
         }
         //Global.level0.board.squares[0][1].draw(canvas)
 
-
+        // Updating the progressbar
+        /*var progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.max = 10
+        var currentLife = Game.levels[Game.selectedLevel].lifeBar
+        ObjectAnimator.ofInt(progressBar, "Life", currentLife)
+            .setDuration(1000)
+            .start()*/
 
 
 

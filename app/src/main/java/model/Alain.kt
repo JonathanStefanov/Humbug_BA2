@@ -35,8 +35,8 @@ class Alain(override var position : Position) : Character(position)  {
             Direction.RIGHT -> Position(position.x + 1, position.y)
         }
 
-        val currentSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
-        val nextSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
+        val currentSquare= Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
+        val nextSquare = Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
         if(currentSquare != null)
         {
             // There is a square where user wants to go
