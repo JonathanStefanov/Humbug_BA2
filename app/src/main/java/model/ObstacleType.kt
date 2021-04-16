@@ -1,5 +1,5 @@
 package model
 
 enum class ObstacleType{
-    FIRE, WALL, SPIKE
+    FIRE, WALL, SPIKES
 }

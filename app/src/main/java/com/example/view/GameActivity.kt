@@ -52,7 +52,8 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 // Change selected character dynamically
                 when(selectedRadio.text){
                     "Alain" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
-                    "Jonathan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[1]
+                    "Dylan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[1]
+                    "Jonathan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[2]
                 }
 
             })

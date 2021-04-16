@@ -7,16 +7,16 @@ public class Game : Application() {
         
         var level0: Level = Level(5,
             5,
-            characters = arrayOf(Alain(Position(2, 4)), Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(Position(2, 4)), Dylan(Position(1,1)), Jonathan(Position(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
             board = Board(
                 arrayOf(
-                    arrayOf(Square(), Square(obstacle = WallObstacle(Direction.DOWN)), Square(), null, Square()),
-                    arrayOf(Square(), Square(), null, null, Square()),
-                    arrayOf(null, Square(), Square(), Square(), Square()),
-                    arrayOf(null, Square(obstacle = WallObstacle(Direction.RIGHT)), Square(), null, Square()),
-                    arrayOf(Square(), Square(), Square(), null, Square()),
-                    arrayOf(Square(), Square(squareType = SquareType.STAR), Square(), null, Square())
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(), null, null, DefaultSquare()),
+                    arrayOf(null, DefaultSquare(), DefaultSquare(), DefaultSquare(), DefaultSquare()),
+                    arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(), null, DefaultSquare()),
+                    arrayOf(DefaultSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
 
                     )
             ))
