@@ -13,7 +13,7 @@ class WinActivity : AppCompatActivity() {
         val buttonwin1: Button = findViewById(R.id.LevelMenu)
         val buttonwin2: Button = findViewById(R.id.NextLevel)
         buttonwin1.setOnClickListener {
-            val intent = Intent(this, LevelSelectActivity::class.java)
+            val intent = Intent(this, LevelSelectedActivity::class.java)
             startActivity(intent)
         }
         buttonwin2.setOnClickListener {
