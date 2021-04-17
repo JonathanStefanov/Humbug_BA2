@@ -1,29 +1,22 @@
 package com.example.view
 
 import android.content.Intent
-import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import kotlinx.android.synthetic.main.activity_level_select.*
 import model.Game
 
-
-class LevelSelectActivity : AppCompatActivity() {
+class LevelSelectedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_level_select)
-        val ll_main = findViewById<LinearLayout>(R.id.ll_main_layout)
+        setContentView(R.layout.activity_level_selected)
+        val ll_main = findViewById(R.id.ll_main_layout) as LinearLayout
 
 
-        Game.levels.forEachIndexed {n, level ->
+        Game.levels.forEachIndexed { n, level ->
 
             // creating the button
             var button = Button(this)
@@ -39,7 +32,7 @@ class LevelSelectActivity : AppCompatActivity() {
                 Game.selectedLevel = n
                 val intent = Intent(this, GameActivity::class.java)
                 startActivity(intent)
-                Log.d("LOL", "Supposed level : $j")
+                Log.d("LOL", "Supposed level : " + j.toString())
 
             }
             // add Button to LinearLayout
