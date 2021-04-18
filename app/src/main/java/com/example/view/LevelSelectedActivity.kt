@@ -1,13 +1,16 @@
 package com.example.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import model.Game
+
 
 class LevelSelectedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,13 +23,21 @@ class LevelSelectedActivity : AppCompatActivity() {
 
             // creating the button
             var button = Button(this)
+
+            // setting the button color
+            button.setBackgroundColor(Color.YELLOW)
+
             // setting layout_width and layout_height using layout parameters
             button.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
+
             var j = n+1
+
+            // setting button name
             button.text = "Level $j"
+
 
             button.setOnClickListener {
                 Game.selectedLevel = n
