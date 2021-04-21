@@ -60,10 +60,8 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
 
         }
         //Global.level0.board.squares[0][1].draw(canvas)
-
         // Updating the progressbar
         /*var progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        progressBar.max = 10
         var currentLife = Game.levels[Game.selectedLevel].lifeBar
         ObjectAnimator.ofInt(progressBar, "Life", currentLife)
             .setDuration(1000)
@@ -72,7 +70,7 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
 
 
 
-
+        GameActivity.checkStatus() // Checking status
 
 
 

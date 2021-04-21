@@ -1,16 +1,19 @@
 package com.example.view
 
+import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import model.Character
-import model.Direction
-import model.Game
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import model.*
 import kotlin.math.abs
 
 
@@ -22,9 +25,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     var y1: Float = 0.0f
     var y0: Float = 0.0f
     lateinit var direction: Direction
-    companion object{
-        const val MIN_DISTANCE = 150
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
@@ -57,6 +57,13 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 }
 
             })
+
+        // Updating default selected character
+        Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
+
+        //
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.max = 10
 
     }
 
@@ -149,6 +156,67 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
     override fun onLongPress(e: MotionEvent?) {
         //TODO("Not yet implemented")
+    }
+
+    private fun startWinActivity(){
+        val intent = Intent(this, WinActivity::class.java)
+        this.startActivity(intent)
+    }
+
+    companion object{
+
+        // Creating a compaion object with this function within in order to be able to push the
+        // win or lost acrivity without needing to pass the game activity object too much
+        fun checkStatus(){
+            Log.d("Jona", "Checking")
+            /*// Using a coroutine to optimize the checking process
+            val job =  GlobalScope.launch { checkCharacters() }
+            checkSquares()
+            job.join() // at this point, both checks are done*/
+            checkCharacters()
+            checkSquares()
+            // TODO : check for moves and life jleft as well
+            if(Game.levels[Game.selectedLevel].charactersOnBoard){
+                // If there is characters on board, check if all squares have been claimed
+                if(!Game.levels[Game.selectedLevel].targetSquaresOnBoard){
+                    // If there is no target squares anymore, it me+ans that they have all bene claimed
+                    // TODO Display WON screen
+                    Log.d("Jona", "WOWWW")
+                }
+            }
+            else{
+                Log.d("Jona", "LOST")
+            }
+        }
+
+        private fun checkCharacters() {
+            // Checking if there still is a character on board
+            var charactersOnBoard = false
+            Game.levels[Game.selectedLevel].characters.forEach {character: Character ->
+                if(character.position != Position(-1, -1)){
+                    charactersOnBoard = true
+                }
+            }
+            // Changing charactersOnBoard accordingly  accordingly
+            Game.levels[Game.selectedLevel].charactersOnBoard = charactersOnBoard
+        }
+
+        private fun checkSquares() {
+            // Checking is there still are target squares that havent been claimed
+            var targetSquareOnBoard = false
+            Game.levels[Game.selectedLevel].board.squares.forEach { arrayOfSquares ->
+                arrayOfSquares.forEach { square ->
+                    if(square?.squareType == SquareType.TARGET){
+                        targetSquareOnBoard = true
+                    }
+                }
+            }
+            // Changing squaresOnBoard accordingly
+            Game.levels[Game.selectedLevel].targetSquaresOnBoard = targetSquareOnBoard
+        }
+
+
+
     }
 
 
