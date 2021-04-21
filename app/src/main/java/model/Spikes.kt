@@ -24,5 +24,6 @@ class Spikes(override var direction: Direction? = null, override var obstacleTyp
     override fun actionOnObstacle() {
         var lifeBar = Game.levels[Game.selectedLevel].lifeBar
         lifeBar -= 1
+
     }
 }

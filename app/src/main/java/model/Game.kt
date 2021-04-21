@@ -1,6 +1,11 @@
 package model
 
+import kotlinx.coroutines.*
 import android.app.Application
+import android.content.Intent
+import android.util.Log
+import com.example.view.LevelSelectedActivity
+
 public class Game : Application() {
     companion object {
         @JvmField
@@ -20,6 +25,21 @@ public class Game : Application() {
 
                     )
             ))
+        var level1: Level = Level(5,
+            5,
+            characters = arrayOf(Alain(Position(2, 2)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
+            status = LevelStatus.IN_PROGRESS,
+            board = Board(
+                arrayOf(
+                    arrayOf(null, DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(), null, null, DefaultSquare()),
+                    arrayOf(null, DefaultSquare(), DefaultSquare(), DefaultSquare(), DefaultSquare()),
+                    arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare()),
+                    arrayOf(TargetSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
+
+                )
+            ))
             /*Board(
                 arrayOf(
                     arrayOf(Square(null, Position(0,0), SquareType.GRASS), Square(null, Position(1,0), SquareType.GRASS), Square(null, Position(2,0), SquareType.GRASS), null, Square(null, Position(4,0), SquareType.GRASS)),
@@ -32,7 +52,7 @@ public class Game : Application() {
             )
         )*/
         var selectedLevel: Int = 0
-        var levels: Array<Level> = arrayOf(level0)
+        var levels: Array<Level> = arrayOf(level0, level1)
         var selectedCharacter: Character = levels[selectedLevel].characters[0]
         var screenHeight = 500
         var screenWidth = 200
@@ -40,7 +60,6 @@ public class Game : Application() {
         // Getting the spacing by dividing screen seize by matrix size
         var widthSpacing = screenWidth.toFloat()/5
         var heightSpacing = screenHeight.toFloat()/6
-
 
 
     }
