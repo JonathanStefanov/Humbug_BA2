@@ -7,7 +7,7 @@ import android.graphics.Paint
 import com.example.view.DrawingView
 import com.example.view.R
 
-class Spikes(override var direction: Direction? = null, override var obstacleType: ObstacleType = ObstacleType.SPIKES) : Obstacle(obstacleType, direction)  {
+open class Spikes(override var direction: Direction? = null, override var obstacleType: ObstacleType = ObstacleType.SPIKES) : Obstacle(obstacleType, direction)  {
     override fun draw(canvas: Canvas?, position: Position, drawingView: DrawingView){
 
         var paint = Paint()

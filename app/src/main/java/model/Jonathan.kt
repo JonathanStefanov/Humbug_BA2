@@ -56,7 +56,7 @@ class Jonathan(override var position : Position) : Character(position) {
         if(currentSquare != null)
         {
             // There is a square where user wants to go
-            if(currentSquare.obstacle?.direction != direction &&
+            if(nextSquare?.obstacle?.direction != direction &&
                 getOppositeDirection(nextSquare?.obstacle?.direction) != direction){
                 // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
                 // Check if there is someone at next position
