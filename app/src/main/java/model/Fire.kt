@@ -7,15 +7,15 @@ import android.graphics.Paint
 import com.example.view.DrawingView
 import com.example.view.R
 
-class Spikes(override var direction: Direction? = null, override var obstacleType: ObstacleType = ObstacleType.SPIKES) : Obstacle(obstacleType, direction)  {
+class Fire(override var direction: Direction? = null, override var obstacleType: ObstacleType = ObstacleType.FIRE) : Obstacle(obstacleType, direction)  {
     override fun draw(canvas: Canvas?, position: Position, drawingView: DrawingView){
 
         var paint = Paint()
-        val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.spikes)
+        val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.fire)
 
-        val x: Float =  position.convertPositionToScreen()[0]
-        val y: Float = position.convertPositionToScreen()[1] + 70
-        val resized = Bitmap.createScaledBitmap(img, 200, 130, true)
+        val x: Float =  position.convertPositionToScreen()[0] - 35
+        val y: Float = position.convertPositionToScreen()[1] + 50
+        val resized = Bitmap.createScaledBitmap(img, 250, 150, true)
         paint.isFilterBitmap = true;
         paint.isDither = true;
         canvas?.drawBitmap(resized, x.toFloat(), y.toFloat(), paint)

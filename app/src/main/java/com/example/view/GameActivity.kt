@@ -61,9 +61,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         // Updating default selected character
         Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
 
-        //
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        progressBar.max = 10
+
 
     }
 
