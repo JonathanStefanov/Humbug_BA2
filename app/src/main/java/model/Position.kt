@@ -2,6 +2,8 @@ package model
 
 class Position(var x: Int, var y: Int){
 
+    
+
     fun convertPositionToScreen(): Array<Float> {
         // Width/ Heigth spacing got from Game object
         // * 5,5 and *3 to augment spacing empirically

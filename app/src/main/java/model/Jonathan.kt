@@ -109,6 +109,7 @@ class Jonathan(override var position : Position) : Character(position) {
                 .setTitle(R.string.dialog_character_fallen_title).show();
             this.position = Position(-1, -1)
         }
+        Game.levels[Game.selectedLevel].movesLeft =  Game.levels[Game.selectedLevel].movesLeft -1
         drawingView.invalidate()
 
 }

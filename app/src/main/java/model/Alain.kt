@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import androidx.core.graphics.drawable.toDrawable
 import com.example.view.DrawingView
 import com.example.view.GameActivity
@@ -27,6 +28,7 @@ class Alain(override var position : Position) : Character(position)  {
     }
     override fun move(direction: Direction, drawingView: DrawingView, gameActivity: GameActivity) {
 
+
         // Computing the desired position and checking the outcome
         val nextPosition: Position =  when(direction){
             Direction.UP -> Position(position.x, position.y - 1)
@@ -34,37 +36,65 @@ class Alain(override var position : Position) : Character(position)  {
             Direction.LEFT -> Position(position.x - 1, position.y)
             Direction.RIGHT -> Position(position.x + 1, position.y)
         }
+        var otherCharacterOnNextPosition = false
 
-        val currentSquare= Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
-        val nextSquare = Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
-        if(currentSquare != null)
+        val currentSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
+        val nextSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
+        if(nextSquare != null)
         {
             // There is a square where user wants to go
-            if(currentSquare.obstacle?.direction != direction &&
-                getOppositeDirection(nextSquare?.obstacle?.direction) != direction){
-                // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
-                this.position = nextPosition // Updating position
-                nextSquare?.actionOnSquare(this) // Action on square
+            if (currentSquare != null) {
+                if(currentSquare.obstacle?.direction != direction &&
+                    getOppositeDirection(nextSquare?.obstacle?.direction) != direction){
+                    // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
+                    // Check if there is someone at next position
+                    Game.levels[Game.selectedLevel].characters.forEach { character ->
+                        Log.d("Jona", "nextPosition " + nextPosition.x + nextPosition.y + " pos " + character.position.x + character.position.y)
+                        if(character.position == nextPosition){
+
+                            otherCharacterOnNextPosition = true
+                        }
+                    }
+
+                    if(!otherCharacterOnNextPosition){
+                        // User can move!
+                        this.position = nextPosition // Updating position
+                        // Jonathan has spike resistance, must check if next obstacle if different then spike
+                        // Will now do action on square and action on obstacle if object is spike
+                        if(nextSquare?.obstacle?.obstacleType != ObstacleType.FIRE){
+                            nextSquare?.actionOnSquare(this) // Action on square
+                        }
+
+                    } else{
+                        // User hurt a character, phones vibrates and user does not move
+                        val vibrator = gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        if (Build.VERSION.SDK_INT >= 26) {
+                            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                        } else {
+                            vibrator.vibrate(200)
+                        }
+                    }
 
 
-            }
-            else{
-                // User hurt a wall, phones vibrates and user does not move
-                val vibrator = gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                if (Build.VERSION.SDK_INT >= 26) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else {
-                    vibrator.vibrate(200)
+                } else{
+                    // User hurt a wall, phones vibrates and user does not move
+                    val vibrator = gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        vibrator.vibrate(200)
+                    }
                 }
             }
         }
         else{
             // Showing dead message and putting the character in -1, -1 so it is invisible
-            val builder = AlertDialog.Builder(gameActivity)
+            val builder =AlertDialog.Builder(gameActivity)
             builder.setMessage(R.string.dialog_character_fallen_message)
                 .setTitle(R.string.dialog_character_fallen_title).show();
             this.position = Position(-1, -1)
         }
+        Game.levels[Game.selectedLevel].movesLeft =  Game.levels[Game.selectedLevel].movesLeft -1
         drawingView.invalidate()
 
     }

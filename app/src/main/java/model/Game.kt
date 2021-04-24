@@ -10,8 +10,8 @@ public class Game : Application() {
     companion object {
         @JvmField
         
-        var level0: Level = Level(5,
-            5,
+        var level0: Level = Level(4,
+            4,
             characters = arrayOf(Alain(Position(2, 4)), Dylan(Position(1,1)), Jonathan(Position(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
             board = Board(
@@ -25,7 +25,7 @@ public class Game : Application() {
 
                     )
             ))
-        var level1: Level = Level(5,
+        var level1: Level = Level(6,
             5,
             characters = arrayOf(Alain(Position(2, 2)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
@@ -33,7 +33,7 @@ public class Game : Application() {
                 arrayOf(
                     arrayOf(null, DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), DefaultSquare(), null, null, DefaultSquare()),
-                    arrayOf(null, DefaultSquare(), DefaultSquare(), DefaultSquare(), DefaultSquare()),
+                    arrayOf(null, DefaultSquare(obstacle = Fire()), DefaultSquare(), DefaultSquare(), DefaultSquare()),
                     arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(TargetSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
