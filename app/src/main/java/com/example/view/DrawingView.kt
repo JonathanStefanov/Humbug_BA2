@@ -57,7 +57,6 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
         // Drawing characters
         for(character in Game.levels[Game.selectedLevel].characters){
             character.draw(canvas, this)
-
         }
         //Global.level0.board.squares[0][1].draw(canvas)
         // Updating the progressbar
@@ -70,9 +69,6 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
 
         // UI SECTION
         this.drawUI(canvas)
-
-
-
         GameActivity.checkStatus() // Checking status
 
 
@@ -94,7 +90,6 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
         // Drawing the life points
         paint.color = Color.BLUE
         for(i in 0 until Game.levels[Game.selectedLevel].lifeBar){
-            Log.d("Jona", "circledrew" + i.toString())
             canvas?.drawCircle(400f + i.toFloat()*110, height.toFloat() - 180, 30f, paint);
         }
 
