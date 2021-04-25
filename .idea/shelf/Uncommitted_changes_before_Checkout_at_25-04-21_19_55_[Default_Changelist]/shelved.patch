@@ -1,0 +1,191 @@
+Index: app/src/main/java/com/example/view/GameActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.view\r\n\r\nimport android.animation.ObjectAnimator\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.DisplayMetrics\r\nimport android.util.Log\r\nimport android.view.GestureDetector\r\nimport android.view.MotionEvent\r\nimport android.widget.ProgressBar\r\nimport android.widget.RadioButton\r\nimport android.widget.RadioGroup\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.core.content.ContextCompat.startActivity\r\nimport model.*\r\nimport kotlin.math.abs\r\n\r\n\r\nclass GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {\r\n    lateinit var drawingView: DrawingView\r\n    lateinit var gestureDetector: GestureDetector\r\n    var x1: Float = 0.0f\r\n    var x0: Float = 0.0f\r\n    var y1: Float = 0.0f\r\n    var y0: Float = 0.0f\r\n    lateinit var direction: Direction\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.game_activity)\r\n\r\n        val displayMetrics = DisplayMetrics()\r\n        windowManager.defaultDisplay.getMetrics(displayMetrics)\r\n\r\n        var width = displayMetrics.widthPixels\r\n        var height = displayMetrics.heightPixels\r\n        gestureDetector = GestureDetector(this, this)\r\n\r\n        Game.screenHeight = height\r\n        Game.screenWidth = width\r\n        drawingView = findViewById(R.id.vMain)\r\n        drawingView.setWillNotDraw(false)\r\n        drawingView.invalidate()\r\n\r\n\r\n\r\n        // Checking which Character is selected\r\n        val radioGroup: RadioGroup = findViewById(R.id.radio_group)\r\n        radioGroup.setOnCheckedChangeListener(\r\n            RadioGroup.OnCheckedChangeListener { _, checkedId ->\r\n                val selectedRadio: RadioButton = findViewById(checkedId)\r\n                // Change selected character dynamically\r\n                when(selectedRadio.text){\r\n                    \"Alain\" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]\r\n                    \"Dylan\" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[1]\r\n                    \"Jonathan\" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[2]\r\n                }\r\n\r\n            })\r\n\r\n        // Updating default selected character\r\n        Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]\r\n\r\n\r\n\r\n    }\r\n\r\n    override fun onTouchEvent(event: MotionEvent?): Boolean {\r\n        gestureDetector.onTouchEvent(event)\r\n        return super.onTouchEvent(event)\r\n    }\r\n    override fun onShowPress(e: MotionEvent?) {\r\n        //TODO(\"Not yet implemented\")\r\n    }\r\n    override fun onSingleTapUp(e: MotionEvent?): Boolean {\r\n        //TODO(\"Not yet implemented\")\r\n        return false\r\n    }\r\n    override fun onDown(e: MotionEvent?): Boolean {\r\n        //TODO(\"Not yet implemented\")\r\n        return false\r\n    }\r\n\r\n    // Swipe checking\r\n    override fun onFling(moveEvent: MotionEvent, downEvent: MotionEvent, velocityX: Float, velocityY: Float): Boolean {\r\n        Log.d(\"Alain\",moveEvent.x.toString());\r\n        Log.d(\"Alain\",moveEvent.y.toString());\r\n        Log.d(\"Alain\",downEvent.x.toString());\r\n        Log.d(\"Alain\",downEvent.y.toString());\r\n        var result: Boolean = false\r\n        var diffY: Float = moveEvent.y - (downEvent.y)\r\n        var diffX: Float = moveEvent.x - (downEvent.x)\r\n        var chosenCharacter: Character? = null\r\n        var direction: Direction? = null\r\n\r\n        /*for (character in Game.levels[Game.currentLevel].characters) {\r\n            if (character.shape.contains(downEvent.rawX,downEvent.rawY )) {\r\n                Log.d(\"LOL\", \"CHAR TOU\")\r\n                Log.d(\"LOL\", \"x: ${downEvent.rawX } y: ${downEvent.rawY}\")\r\n            }\r\n        }*/\r\n\r\n        // Checking in which way the swipe has occurred\r\n        if(abs(diffX) > abs(diffY)){\r\n            // Left or right swipe check\r\n            if(abs(diffX) > 100 && abs(velocityX) > 100){\r\n                // TODO swipe right\r\n                if(diffX > 0){\r\n                    // left SWIPE\r\n                    direction = Direction.LEFT\r\n                    Log.d(\"LOL\", \"x: ${downEvent.rawX + 200} y: ${downEvent.rawY - 200 }\")\r\n\r\n                    result = true\r\n                }\r\n                else{\r\n                    // rigt SWIPE\r\n                    direction = Direction.RIGHT\r\n                    result = true\r\n                }\r\n\r\n            }\r\n\r\n        }\r\n        else{\r\n            // Up and down swipe\r\n            if(abs(diffY) > 100 && abs(velocityY) > 100){\r\n                if(diffY > 0){\r\n                    // UP SWIPE\r\n                    direction = Direction.UP\r\n                    result = true\r\n                }\r\n                else{\r\n                    // DOWN SWIPE\r\n                    Log.d(\"LOL\", \"down\")\r\n                    direction = Direction.DOWN\r\n                    Log.d(\"LOL\", \"x: ${downEvent.rawX } y: ${downEvent.rawY - 500}\")\r\n                    result = true\r\n                }\r\n\r\n            }\r\n\r\n        }\r\n\r\n        if (direction != null) {\r\n            Game.selectedCharacter.move(direction, drawingView, this)\r\n        }\r\n\r\n\r\n        return result\r\n    }\r\n    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {\r\n        //TODO(\"Not yet implemented\")\r\n        return false\r\n    }\r\n    override fun onLongPress(e: MotionEvent?) {\r\n        //TODO(\"Not yet implemented\")\r\n    }\r\n\r\n    private fun startWinActivity(){\r\n        val intent = Intent(this, WinActivity::class.java)\r\n        this.startActivity(intent)\r\n    }\r\n\r\n    companion object{\r\n\r\n        // Creating a compaion object with this function within in order to be able to push the\r\n        // win or lost acrivity without needing to pass the game activity object too much\r\n        fun checkStatus(){\r\n            Log.d(\"Jona\", \"Checking\")\r\n            /*// Using a coroutine to optimize the checking process\r\n            val job =  GlobalScope.launch { checkCharacters() }\r\n            checkSquares()\r\n            job.join() // at this point, both checks are done*/\r\n            checkCharacters()\r\n            checkSquares()\r\n            // TODO : check for moves and life jleft as well\r\n            if(Game.levels[Game.selectedLevel].charactersOnBoard){\r\n                // If there is characters on board, check if all squares have been claimed\r\n                if(!Game.levels[Game.selectedLevel].targetSquaresOnBoard){\r\n                    // If there is no target squares anymore, it me+ans that they have all bene claimed\r\n                    // TODO Display WON screen\r\n                    Log.d(\"Jona\", \"WOWWW\")\r\n                }\r\n            }\r\n            else{\r\n                Log.d(\"Jona\", \"LOST\")\r\n            }\r\n        }\r\n\r\n        private fun checkCharacters() {\r\n            // Checking if there still is a character on board\r\n            var charactersOnBoard = false\r\n            Game.levels[Game.selectedLevel].characters.forEach {character: Character ->\r\n                if(character.position != Position(-1, -1)){\r\n                    charactersOnBoard = true\r\n                }\r\n            }\r\n            // Changing charactersOnBoard accordingly  accordingly\r\n            Game.levels[Game.selectedLevel].charactersOnBoard = charactersOnBoard\r\n        }\r\n\r\n        private fun checkSquares() {\r\n            // Checking is there still are target squares that havent been claimed\r\n            var targetSquareOnBoard = false\r\n            Game.levels[Game.selectedLevel].board.squares.forEach { arrayOfSquares ->\r\n                arrayOfSquares.forEach { square ->\r\n                    if(square?.squareType == SquareType.TARGET){\r\n                        targetSquareOnBoard = true\r\n                    }\r\n                }\r\n            }\r\n            // Changing squaresOnBoard accordingly\r\n            Game.levels[Game.selectedLevel].targetSquaresOnBoard = targetSquareOnBoard\r\n        }\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/view/GameActivity.kt	(revision 1cfc98a503f67136e383fc15206049ceeb251a62)
++++ app/src/main/java/com/example/view/GameActivity.kt	(date 1619371132116)
+@@ -1,7 +1,10 @@
+ package com.example.view
+ 
+ import android.animation.ObjectAnimator
++import android.app.PendingIntent
++import android.content.Context
+ import android.content.Intent
++import android.icu.util.TimeUnit
+ import android.os.Bundle
+ import android.util.DisplayMetrics
+ import android.util.Log
+@@ -18,6 +21,10 @@
+ 
+ 
+ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
++    init {
++        var instance = this
++    }
++
+     lateinit var drawingView: DrawingView
+     lateinit var gestureDetector: GestureDetector
+     var x1: Float = 0.0f
+@@ -144,6 +151,10 @@
+         if (direction != null) {
+             Game.selectedCharacter.move(direction, drawingView, this)
+         }
++        this.checkStatus()
++
++
++
+ 
+ 
+         return result
+@@ -157,66 +168,61 @@
+     }
+ 
+     private fun startWinActivity(){
+-        val intent = Intent(this, WinActivity::class.java)
+-        this.startActivity(intent)
+-    }
++        val intent = Intent(this, WelcomeActivity::class.java)
++        startActivity(intent)
+ 
+-    companion object{
+-
+-        // Creating a compaion object with this function within in order to be able to push the
+-        // win or lost acrivity without needing to pass the game activity object too much
+-        fun checkStatus(){
+-            Log.d("Jona", "Checking")
+-            /*// Using a coroutine to optimize the checking process
+-            val job =  GlobalScope.launch { checkCharacters() }
+-            checkSquares()
+-            job.join() // at this point, both checks are done*/
+-            checkCharacters()
+-            checkSquares()
+-            // TODO : check for moves and life jleft as well
+-            if(Game.levels[Game.selectedLevel].charactersOnBoard){
+-                // If there is characters on board, check if all squares have been claimed
+-                if(!Game.levels[Game.selectedLevel].targetSquaresOnBoard){
+-                    // If there is no target squares anymore, it me+ans that they have all bene claimed
+-                    // TODO Display WON screen
+-                    Log.d("Jona", "WOWWW")
+-                }
+-            }
+-            else{
+-                Log.d("Jona", "LOST")
+-            }
+-        }
++    }
++    private fun checkStatus(){
++        Log.d("Jona", "Checking")
++        /*// Using a coroutine to optimize the checking process
++        val job =  GlobalScope.launch { checkCharacters() }
++        checkSquares()
++        job.join() // at this point, both checks are done*/
++        checkCharacters()
++        checkSquares()
++        // TODO : check for moves and life jleft as well
++        if(Game.levels[Game.selectedLevel].charactersOnBoard){
++            // If there is characters on board, check if all squares have been claimed
++            if(!Game.levels[Game.selectedLevel].targetSquaresOnBoard){
++                // If there is no target squares anymore, it me+ans that they have all bene claimed
++                // TODO Display WON screen
++                Log.d("Jona", "won")
++                startWinActivity()
++            }
++        }
++        else{
++            Log.d("Jona", "LOST")
++        }
++    }
+ 
+-        private fun checkCharacters() {
+-            // Checking if there still is a character on board
+-            var charactersOnBoard = false
+-            Game.levels[Game.selectedLevel].characters.forEach {character: Character ->
+-                if(character.position != Position(-1, -1)){
+-                    charactersOnBoard = true
+-                }
+-            }
+-            // Changing charactersOnBoard accordingly  accordingly
+-            Game.levels[Game.selectedLevel].charactersOnBoard = charactersOnBoard
+-        }
++    private fun checkCharacters() {
++        // Checking if there still is a character on board
++        var charactersOnBoard = false
++        Game.levels[Game.selectedLevel].characters.forEach {character: Character ->
++            if(character.position != Position(-1, -1)){
++                charactersOnBoard = true
++            }
++        }
++        // Changing charactersOnBoard accordingly  accordingly
++        Game.levels[Game.selectedLevel].charactersOnBoard = charactersOnBoard
++    }
+ 
+-        private fun checkSquares() {
+-            // Checking is there still are target squares that havent been claimed
+-            var targetSquareOnBoard = false
+-            Game.levels[Game.selectedLevel].board.squares.forEach { arrayOfSquares ->
+-                arrayOfSquares.forEach { square ->
+-                    if(square?.squareType == SquareType.TARGET){
+-                        targetSquareOnBoard = true
+-                    }
+-                }
+-            }
+-            // Changing squaresOnBoard accordingly
+-            Game.levels[Game.selectedLevel].targetSquaresOnBoard = targetSquareOnBoard
+-        }
++    private fun checkSquares() {
++        // Checking is there still are target squares that havent been claimed
++        var targetSquareOnBoard = false
++        Game.levels[Game.selectedLevel].board.squares.forEach { arrayOfSquares ->
++            arrayOfSquares.forEach { square ->
++                if(square?.squareType == SquareType.TARGET){
++                    targetSquareOnBoard = true
++                }
++            }
++        }
++        // Changing squaresOnBoard accordingly
++        Game.levels[Game.selectedLevel].targetSquaresOnBoard = targetSquareOnBoard
++    }
+ 
+ 
+ 
+-    }
+-
+ 
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/model/Game.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model\r\n\r\nimport kotlinx.coroutines.*\r\nimport android.app.Application\r\nimport android.content.Intent\r\nimport android.util.Log\r\nimport com.example.view.LevelSelectedActivity\r\n\r\npublic class Game : Application() {\r\n    companion object {\r\n        @JvmField\r\n        \r\n        var level0: Level = Level(4,\r\n            4,\r\n            characters = arrayOf(Alain(Position(2, 4)), Dylan(Position(1,1)), Jonathan(Position(3,2 ))),\r\n            status = LevelStatus.IN_PROGRESS,\r\n            board = Board(\r\n                arrayOf(\r\n                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),\r\n                    arrayOf(DefaultSquare(), DefaultSquare(), null, null, DefaultSquare()),\r\n                    arrayOf(null, DefaultSquare(), DefaultSquare(), DefaultSquare(), DefaultSquare()),\r\n                    arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),\r\n                    arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(), null, DefaultSquare()),\r\n                    arrayOf(DefaultSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())\r\n\r\n                    )\r\n            ))\r\n        var level1: Level = Level(6,\r\n            5,\r\n            characters = arrayOf(Alain(Position(2, 2)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),\r\n            status = LevelStatus.IN_PROGRESS,\r\n            board = Board(\r\n                arrayOf(\r\n                    arrayOf(null, DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),\r\n                    arrayOf(DefaultSquare(), DefaultSquare(), null, null, DefaultSquare()),\r\n                    arrayOf(null, DefaultSquare(obstacle = Fire()), DefaultSquare(), DefaultSquare(), DefaultSquare()),\r\n                    arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),\r\n                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare()),\r\n                    arrayOf(TargetSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())\r\n\r\n                )\r\n            ))\r\n            /*Board(\r\n                arrayOf(\r\n                    arrayOf(Square(null, Position(0,0), SquareType.GRASS), Square(null, Position(1,0), SquareType.GRASS), Square(null, Position(2,0), SquareType.GRASS), null, Square(null, Position(4,0), SquareType.GRASS)),\r\n                    arrayOf(Square(null, Position(0,1), SquareType.GRASS), Square(null, Position(1,1), SquareType.GRASS), Square(null, Position(2,1), SquareType.GRASS), Square(null, Position(3,1), SquareType.STAR), Square(null, Position(4,1), SquareType.GRASS)),\r\n                    arrayOf(Square(null, Position(0,2), SquareType.GRASS), Square(null, Position(1,2), SquareType.GRASS), Square(null, Position(2,2), SquareType.GRASS), Square(null, Position(3,2), SquareType.GRASS), Square(null, Position(4,2), SquareType.GRASS)),\r\n                    arrayOf(Square(null, Position(0,3), SquareType.GRASS), Square(null, Position(1,3), SquareType.GRASS), Square(null, Position(2,3), SquareType.GRASS), Square(null, Position(3,3), SquareType.GRASS), Square(null, Position(4,3), SquareType.GRASS)),\r\n                    arrayOf(null, Square(null, Position(1,4), SquareType.GRASS), Square(null, Position(2,4), SquareType.GRASS), Square(null, Position(3,4), SquareType.GRASS), Square(null, Position(4,4), SquareType.GRASS)),\r\n                    arrayOf(Square(null, Position(0,5), SquareType.GRASS), Square(null, Position(1,5), SquareType.STAR), Square(null, Position(2,5), SquareType.GRASS), Square(null, Position(3,5), SquareType.GRASS), Square(null, Position(4,5), SquareType.GRASS))\r\n                )\r\n            )\r\n        )*/\r\n        var selectedLevel: Int = 0\r\n        var levels: Array<Level> = arrayOf(level0, level1)\r\n        var selectedCharacter: Character = levels[selectedLevel].characters[0]\r\n        var screenHeight = 500\r\n        var screenWidth = 200\r\n\r\n        // Getting the spacing by dividing screen seize by matrix size\r\n        var widthSpacing = screenWidth.toFloat()/5\r\n        var heightSpacing = screenHeight.toFloat()/6\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/model/Game.kt	(revision 1cfc98a503f67136e383fc15206049ceeb251a62)
++++ app/src/main/java/model/Game.kt	(date 1619370849626)
+@@ -4,12 +4,13 @@
+ import android.app.Application
+ import android.content.Intent
+ import android.util.Log
++import com.example.view.GameActivity
+ import com.example.view.LevelSelectedActivity
++import com.example.view.WinActivity
+ 
+ public class Game : Application() {
+     companion object {
+         @JvmField
+-        
+         var level0: Level = Level(4,
+             4,
+             characters = arrayOf(Alain(Position(2, 4)), Dylan(Position(1,1)), Jonathan(Position(3,2 ))),
+@@ -62,5 +63,6 @@
+         var heightSpacing = screenHeight.toFloat()/6
+ 
+ 
++
+     }
+ }
+\ No newline at end of file

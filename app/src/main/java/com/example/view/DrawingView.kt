@@ -69,7 +69,6 @@ class DrawingView @JvmOverloads constructor (context: Context, attributes: Attri
 
         // UI SECTION
         this.drawUI(canvas)
-        GameActivity.checkStatus() // Checking status
 
 
 

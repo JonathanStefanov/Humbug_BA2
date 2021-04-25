@@ -13,7 +13,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         val buttonwelcome: Button = findViewById(R.id.button_play)
         buttonwelcome.setOnClickListener {
-            val intent = Intent(this, LevelSelectedActivity::class.java)
+            val intent = Intent(this, LevelSelectActivity::class.java)
             startActivity(intent)
         }
 

@@ -1,10 +1,6 @@
 package model
 
-import kotlinx.coroutines.*
 import android.app.Application
-import android.content.Intent
-import android.util.Log
-import com.example.view.LevelSelectedActivity
 
 public class Game : Application() {
     companion object {

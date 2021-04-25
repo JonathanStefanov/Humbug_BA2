@@ -6,17 +6,17 @@ import android.os.Bundle
 import android.widget.Button
 import model.Game
 
-class WinActivity : AppCompatActivity() {
+class WonActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_win)
-        val buttonwin1: Button = findViewById(R.id.LevelMenu)
-        val buttonwin2: Button = findViewById(R.id.NextLevel)
-        buttonwin1.setOnClickListener {
-            val intent = Intent(this, LevelSelectedActivity::class.java)
+        val buttonLevelSelect: Button = findViewById(R.id.LevelMenu)
+        val buttonNextLevel: Button = findViewById(R.id.NextLevel)
+        buttonLevelSelect.setOnClickListener {
+            val intent = Intent(this, LevelSelectActivity::class.java)
             startActivity(intent)
         }
-        buttonwin2.setOnClickListener {
+        buttonNextLevel.setOnClickListener {
             Game.selectedLevel += 1
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)

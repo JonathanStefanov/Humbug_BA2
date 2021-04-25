@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import model.Game
 
-class LevelSelectedActivity : AppCompatActivity() {
+class LevelSelectActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_level_selected)
