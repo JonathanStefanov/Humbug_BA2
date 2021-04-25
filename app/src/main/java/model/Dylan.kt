@@ -67,6 +67,7 @@ class Dylan (override var position : Position) : Character(position) {
         Log.d("Dylan", nextPosition.y.toString())
         var i = 0
 
+        // There is a direction where user wants to go
         while (currentSquare?.obstacle?.direction != direction &&
             getOppositeDirection(nextSquare?.obstacle?.direction) != direction && currentSquare?.squareType != SquareType.TARGET && currentSquare != null){
 
@@ -76,63 +77,40 @@ class Dylan (override var position : Position) : Character(position) {
             Log.d("Dylan", nextPosition.y.toString())
             var otherCharacterOnNextPosition = false
 
-
-            if (nextSquare != null) {
-                // There is a square where user wants to go
-                if (nextSquare?.obstacle?.direction != direction &&
-                    getOppositeDirection(nextSquare?.obstacle?.direction) != direction
-                ) {
-                    // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
-                    // Check if there is someone at next position
-                    for (character in Game.levels[Game.selectedLevel].characters) {
-                        if (character.position == nextPosition) {
-                            otherCharacterOnNextPosition = true
-                        }
-                    }
-                    Log.d("Dylan", otherCharacterOnNextPosition.toString())
-                    if (!otherCharacterOnNextPosition) {
-                        // User can move!
-                        this.position = nextPosition // Updating position
-                        nextSquare?.actionOnSquare(this) // Action on square
-                    } else {
-                        // User hurt a character, phones vibrates and user does not move
-                        val vibrator =
-                            gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                        if (Build.VERSION.SDK_INT >= 26) {
-                            vibrator.vibrate(
-                                VibrationEffect.createOneShot(
-                                    200,
-                                    VibrationEffect.DEFAULT_AMPLITUDE
-                                )
-                            )
-                        } else {
-                            vibrator.vibrate(200)
-                        }
-                    }
-
-
-                } else {
-                    // User hurt a wall, phones vibrates and user does not move
-                    val vibrator =
-                        gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                    if (Build.VERSION.SDK_INT >= 26) {
-                        vibrator.vibrate(
-                            VibrationEffect.createOneShot(
-                                200,
-                                VibrationEffect.DEFAULT_AMPLITUDE
-                            )
-                        )
-                    } else {
-                        vibrator.vibrate(200)
-                    }
+            // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
+            // Check if there is someone at next position
+            for (character in Game.levels[Game.selectedLevel].characters) {
+                if (character.position == nextPosition) {
+                    otherCharacterOnNextPosition = true
                 }
-            } else {
+            }
+
+            if (nextSquare == null) {
                 // Showing dead message and putting the character in -1, -1 so it is invisible
                 val builder = AlertDialog.Builder(gameActivity)
                 builder.setMessage(R.string.dialog_character_fallen_message)
                     .setTitle(R.string.dialog_character_fallen_title).show();
                 this.position = Position(-1, -1)
-
+            }
+            Log.d("Dylan", otherCharacterOnNextPosition.toString())
+            if (!otherCharacterOnNextPosition) {
+                // User can move!
+                this.position = nextPosition // Updating position
+                nextSquare?.actionOnSquare(this) // Action on square
+            } else {
+                // User hurt a character, phones vibrates and user does not move
+                val vibrator =
+                    gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                if (Build.VERSION.SDK_INT >= 26) {
+                    vibrator.vibrate(
+                        VibrationEffect.createOneShot(
+                            200,
+                            VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
+                } else {
+                    vibrator.vibrate(200)
+                }
             }
 
             nextPosition = when (direction) {
