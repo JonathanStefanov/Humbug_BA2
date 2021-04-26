@@ -1,12 +1,14 @@
 package com.example.view
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.core.view.marginBottom
 import model.Game
 
 class LevelSelectedActivity : AppCompatActivity() {
@@ -26,6 +28,7 @@ class LevelSelectedActivity : AppCompatActivity() {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             var j = n+1
+
             button.text = "Level $j"
 
             button.setOnClickListener {
