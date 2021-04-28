@@ -51,7 +51,7 @@ public class Game : Application() {
                     )
             ))
         var level1: Level = Level(6,
-            5,
+            2,
             characters = arrayOf(Alain(Position(2, 2)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
             board = Board(

@@ -165,11 +165,11 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
 
 
-    private suspend fun checkCharacters() {
+    private fun checkCharacters() {
         // Checking if there still is a character on board
         var charactersOnBoard = false
         Game.levels[Game.selectedLevel].characters.forEach {character: Character ->
-            if(character.position != Position(-1, -1)){
+            if(character.position.x != -1 && character.position.y != -1){
                 charactersOnBoard = true
             }
         }
@@ -177,7 +177,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         Game.levels[Game.selectedLevel].charactersOnBoard = charactersOnBoard
     }
 
-    private suspend fun checkSquares() {
+    private fun checkSquares() {
         // Checking is there still are target squares that havent been claimed
         var targetSquareOnBoard = false
         Game.levels[Game.selectedLevel].board.squares.forEach { arrayOfSquares ->
@@ -192,10 +192,18 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
 
 
+    private fun wonLevel(){
+        startWinActivity()
+        Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
+    }
+    private fun lostLevel(){
+        startLostActivity()
+        Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
+    }
 
 
     private fun checkStatus() {
-        Log.d("Jona", "Checking")
+        Log.d("Jona", Game.levels[Game.selectedLevel].charactersOnBoard.toString())
         /*/ Using a coroutine to optimize the checking process
         val job =  GlobalScope.launch { checkCharacters() }
         checkSquares()
@@ -204,25 +212,21 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             launch { checkSquares() }
             launch { checkCharacters() }
         }
+        checkSquares()
+        checkCharacters()
         // TODO : check for moves and life jleft as well
         if (Game.levels[Game.selectedLevel].lifeBar > 0 && Game.levels[Game.selectedLevel].movesLeft > 0) {
             if (Game.levels[Game.selectedLevel].charactersOnBoard) {
                 // If there is characters on board, check if all squares have been claimed
                 if (!Game.levels[Game.selectedLevel].targetSquaresOnBoard) {
                     // If there is no target squares anymore, it me+ans that they have all bene claimed
-                    // TODO Display WON screen
-                    Log.d("Jona", "WOWWW")
-                    startWinActivity()
-                    Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel]
+                    wonLevel()
                 }
             } else {
-                Log.d("Jona", "LOST")
+                lostLevel()
             }
         } else {
-            // Level failed
-            startLostActivity()
-            // ResetLevel
-            Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel]
+            lostLevel()
 
         }
     }
