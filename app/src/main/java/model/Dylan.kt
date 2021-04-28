@@ -72,6 +72,7 @@ class Dylan (override var position : Position) : Character(position) {
         if (currentSquare?.obstacle?.direction == direction &&
             getOppositeDirection(nextSquare?.obstacle?.direction) == direction
         ) {
+            // User hurt a wall, phones vibrates and user does not move
             val vibrator =
                 gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= 26) {
@@ -89,7 +90,6 @@ class Dylan (override var position : Position) : Character(position) {
             while (currentSquare?.obstacle?.direction != direction &&
                 getOppositeDirection(nextSquare?.obstacle?.direction) != direction && currentSquare?.squareType != SquareType.TARGET && currentSquare != null
             ) {
-
                 // Computing the desired position and checking the outcome
                 Log.d("Dylan", "While")
                 Log.d("Dylan", position.y.toString())
@@ -99,7 +99,8 @@ class Dylan (override var position : Position) : Character(position) {
                 // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
                 // Check if there is someone at next position
                 for (character in Game.levels[Game.selectedLevel].characters) {
-                    if (character.position == nextPosition) {
+                    Log.d("Dylan", character.position.toString())
+                    if (character.position.x == nextPosition.x && character.position.y == nextPosition.y ) {
                         otherCharacterOnNextPosition = true
                     }
                 }
@@ -130,6 +131,7 @@ class Dylan (override var position : Position) : Character(position) {
                     } else {
                         vibrator.vibrate(200)
                     }
+                    break
                 }
 
                 nextPosition = when (direction) {
