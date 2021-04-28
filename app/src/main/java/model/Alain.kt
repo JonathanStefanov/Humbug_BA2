@@ -50,7 +50,7 @@ class Alain(override var position : Position) : Character(position)  {
                     // Check if there is someone at next position
                     Game.levels[Game.selectedLevel].characters.forEach { character ->
                         Log.d("Jona", "nextPosition " + nextPosition.x + nextPosition.y + " pos " + character.position.x + character.position.y)
-                        if(character.position == nextPosition){
+                        if(character.position.x == nextPosition.x && character.position.y == nextPosition.y){
 
                             otherCharacterOnNextPosition = true
                         }

@@ -9,6 +9,9 @@ import android.view.MotionEvent
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import model.*
 import kotlin.math.abs
 
@@ -86,7 +89,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         var result: Boolean = false
         var diffY: Float = moveEvent.y - (downEvent.y)
         var diffX: Float = moveEvent.x - (downEvent.x)
-        var chosenCharacter: Character? = null
         var direction: Direction? = null
 
         /*for (character in Game.levels[Game.currentLevel].characters) {
@@ -157,38 +159,17 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         val intent = Intent(this, WonActivity::class.java)
         this.startActivity(intent)
     }
-
-
-
-
-    private fun checkStatus(){
-        Log.d("Jona", "Checking")
-        /*// Using a coroutine to optimize the checking process
-        val job =  GlobalScope.launch { checkCharacters() }
-        checkSquares()
-        job.join() // at this point, both checks are done*/
-        checkCharacters()
-        checkSquares()
-        // TODO : check for moves and life jleft as well
-        if(Game.levels[Game.selectedLevel].charactersOnBoard){
-            // If there is characters on board, check if all squares have been claimed
-            if(!Game.levels[Game.selectedLevel].targetSquaresOnBoard){
-                // If there is no target squares anymore, it me+ans that they have all bene claimed
-                // TODO Display WON screen
-                Log.d("Jona", "WOWWW")
-                startWinActivity()
-            }
-        }
-        else{
-            Log.d("Jona", "LOST")
-        }
+    private fun startLostActivity(){
+        val intent = Intent(this, LostActivity::class.java)
+        this.startActivity(intent)
     }
+
 
     private fun checkCharacters() {
         // Checking if there still is a character on board
         var charactersOnBoard = false
         Game.levels[Game.selectedLevel].characters.forEach {character: Character ->
-            if(character.position != Position(-1, -1)){
+            if(character.position.x != -1 && character.position.y != -1){
                 charactersOnBoard = true
             }
         }
@@ -210,6 +191,45 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         Game.levels[Game.selectedLevel].targetSquaresOnBoard = targetSquareOnBoard
     }
 
+
+    private fun wonLevel(){
+        startWinActivity()
+        Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
+    }
+    private fun lostLevel(){
+        startLostActivity()
+        Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
+    }
+
+
+    private fun checkStatus() {
+        Log.d("Jona", Game.levels[Game.selectedLevel].charactersOnBoard.toString())
+        /*/ Using a coroutine to optimize the checking process
+        val job =  GlobalScope.launch { checkCharacters() }
+        checkSquares()
+        job.join() // at this point, both checks are done*/
+        runBlocking {
+            launch { checkSquares() }
+            launch { checkCharacters() }
+        }
+        checkSquares()
+        checkCharacters()
+        // TODO : check for moves and life jleft as well
+        if (Game.levels[Game.selectedLevel].lifeBar > 0 && Game.levels[Game.selectedLevel].movesLeft > 0) {
+            if (Game.levels[Game.selectedLevel].charactersOnBoard) {
+                // If there is characters on board, check if all squares have been claimed
+                if (!Game.levels[Game.selectedLevel].targetSquaresOnBoard) {
+                    // If there is no target squares anymore, it me+ans that they have all bene claimed
+                    wonLevel()
+                }
+            } else {
+                lostLevel()
+            }
+        } else {
+            lostLevel()
+
+        }
+    }
 
 
 
