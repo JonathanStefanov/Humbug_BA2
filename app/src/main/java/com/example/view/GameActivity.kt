@@ -67,6 +67,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         gestureDetector.onTouchEvent(event)
+
         return super.onTouchEvent(event)
     }
     override fun onShowPress(e: MotionEvent?) {
