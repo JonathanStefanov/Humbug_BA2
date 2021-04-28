@@ -10,13 +10,13 @@ class LostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lost)
 
-        val button1 : Button = findViewById(R.id.TryAgain)
-        val button2 : Button = findViewById(R.id.LevelMenu)
-        button1.setOnClickListener {
+        val tryAgainButton : Button = findViewById(R.id.TryAgain)
+        val menuButton : Button = findViewById(R.id.LevelMenu)
+        tryAgainButton.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
         }
-        button2.setOnClickListener {
+        menuButton.setOnClickListener {
             val intent = Intent(this, LevelSelectActivity::class.java)
             startActivity(intent)
         }
