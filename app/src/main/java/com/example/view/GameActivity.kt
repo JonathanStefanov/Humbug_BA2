@@ -82,10 +82,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     // Swipe checking
     override fun onFling(moveEvent: MotionEvent, downEvent: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-        Log.d("Alain",moveEvent.x.toString());
-        Log.d("Alain",moveEvent.y.toString());
-        Log.d("Alain",downEvent.x.toString());
-        Log.d("Alain",downEvent.y.toString());
+
         var result: Boolean = false
         var diffY: Float = moveEvent.y - (downEvent.y)
         var diffX: Float = moveEvent.x - (downEvent.x)
@@ -203,7 +200,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
 
     private fun checkStatus() {
-        Log.d("Jona", Game.levels[Game.selectedLevel].charactersOnBoard.toString())
+
         /*/ Using a coroutine to optimize the checking process
         val job =  GlobalScope.launch { checkCharacters() }
         checkSquares()

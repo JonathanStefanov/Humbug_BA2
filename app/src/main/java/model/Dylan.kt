@@ -60,14 +60,6 @@ class Dylan (override var position : Position) : Character(position) {
         var nextSquare: Square? =
             Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
 
-        Log.d("Dylan", (nextSquare?.obstacle?.direction != direction).toString())
-        Log.d(
-            "Dylan",
-            (getOppositeDirection(nextSquare?.obstacle?.direction) != direction).toString()
-        )
-        Log.d("Dylan", position.y.toString())
-        Log.d("Dylan", nextPosition.y.toString())
-        var i = 0
 
         if (currentSquare?.obstacle?.direction == direction &&
             getOppositeDirection(nextSquare?.obstacle?.direction) == direction
@@ -91,15 +83,11 @@ class Dylan (override var position : Position) : Character(position) {
                 getOppositeDirection(nextSquare?.obstacle?.direction) != direction && currentSquare?.squareType != SquareType.TARGET && currentSquare != null
             ) {
                 // Computing the desired position and checking the outcome
-                Log.d("Dylan", "While")
-                Log.d("Dylan", position.y.toString())
-                Log.d("Dylan", nextPosition.y.toString())
                 var otherCharacterOnNextPosition = false
 
                 // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
                 // Check if there is someone at next position
                 for (character in Game.levels[Game.selectedLevel].characters) {
-                    Log.d("Dylan", character.position.toString())
                     if (character.position.x == nextPosition.x && character.position.y == nextPosition.y ) {
                         otherCharacterOnNextPosition = true
                     }
@@ -112,7 +100,7 @@ class Dylan (override var position : Position) : Character(position) {
                         .setTitle(R.string.dialog_character_fallen_title).show();
                     this.position = Position(-1, -1)
                 }
-                Log.d("Dylan", otherCharacterOnNextPosition.toString())
+                
                 if (!otherCharacterOnNextPosition) {
                     // User can move!
                     this.position = nextPosition // Updating position

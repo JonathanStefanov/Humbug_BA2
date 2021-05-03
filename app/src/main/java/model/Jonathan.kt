@@ -64,7 +64,6 @@ class Jonathan(override var position : Position) : Character(position) {
                     // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
                     // Check if there is someone at next position
                     Game.levels[Game.selectedLevel].characters.forEach { character ->
-                        Log.d("Jona", "nextPosition " + nextPosition.x + nextPosition.y + " pos " + character.position.x + character.position.y)
                         if(character.position.x == nextPosition.x && character.position.y == nextPosition.y){
 
                             otherCharacterOnNextPosition = true
