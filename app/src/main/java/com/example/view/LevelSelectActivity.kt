@@ -3,11 +3,14 @@ package com.example.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import model.Game
+import model.Level
+import model.LevelStatus
 
 class LevelSelectActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,16 +35,28 @@ class LevelSelectActivity : AppCompatActivity() {
                 Game.selectedLevel = n
                 val intent = Intent(this, GameActivity::class.java)
                 startActivity(intent)
-                Log.d("LOL", "Supposed level : " + j.toString())
 
             }
             // add Button to LinearLayout
             ll_main.addView(button)
+            if(checkIfAllLevelsWon()){
+                val intent = Intent(this, FinalScreenActivity::class.java)
+                startActivity(intent)
+            }
 
 
 
         }
 
+
+    }
+
+    private fun checkIfAllLevelsWon(): Boolean {
+        var allLevelsWon = true
+        Game.levels.forEach {level: Level ->
+            if(level.status != LevelStatus.WON){allLevelsWon = false}
+        }
+        return allLevelsWon
     }
 }
 

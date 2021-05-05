@@ -7,6 +7,7 @@ import com.example.view.R
 class TargetSquare(override var obstacle: Obstacle? = null, override var squareType: SquareType = SquareType.TARGET) : Square(squareType, obstacle){
     override fun actionOnSquare(character: Character){
         if(this.squareType == SquareType.TARGET){
+            // Changing the squaretype to FLAG when character steps on target square
             character.position = Position(-1, -1)
             this.squareType = SquareType.FLAG // Square taken
 
@@ -16,7 +17,7 @@ class TargetSquare(override var obstacle: Obstacle? = null, override var squareT
     }
 
 
-    override fun draw(
+    override fun drawSquare(
         canvas: Canvas?,
         position: Position,
         drawingView: DrawingView
@@ -35,7 +36,7 @@ class TargetSquare(override var obstacle: Obstacle? = null, override var squareT
         canvas?.drawRect(squareShape, paint)
 
         // Drawing the obstacle
-        obstacle?.draw(canvas, position, drawingView)
+        obstacle?.drawObstacle(canvas, position, drawingView)
         if(this.squareType == SquareType.FLAG){
 
             val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.flag)

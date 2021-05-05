@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 
 class Dylan (override var position : Position) : Character(position) {
 
-    override fun draw(canvas: Canvas?, drawingView: DrawingView) {
+    override fun drawCharacter(canvas: Canvas?, drawingView: DrawingView) {
         val paint = Paint()
 
         val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.dylan)
@@ -60,15 +60,6 @@ class Dylan (override var position : Position) : Character(position) {
         var nextSquare: Square? =
             Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
 
-        Log.d("Dylan", (nextSquare?.obstacle?.direction != direction).toString())
-        Log.d(
-            "Dylan",
-            (getOppositeDirection(nextSquare?.obstacle?.direction) != direction).toString()
-        )
-        Log.d("Dylan", position.y.toString())
-        Log.d("Dylan", nextPosition.y.toString())
-        var i = 0
-
         if (currentSquare?.obstacle?.direction == direction &&
             getOppositeDirection(nextSquare?.obstacle?.direction) == direction
         ) {
@@ -91,9 +82,6 @@ class Dylan (override var position : Position) : Character(position) {
                 getOppositeDirection(nextSquare?.obstacle?.direction) != direction && currentSquare?.squareType != SquareType.TARGET && currentSquare != null
             ) {
                 // Computing the desired position and checking the outcome
-                Log.d("Dylan", "While")
-                Log.d("Dylan", position.y.toString())
-                Log.d("Dylan", nextPosition.y.toString())
                 var otherCharacterOnNextPosition = false
 
                 // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
@@ -105,13 +93,6 @@ class Dylan (override var position : Position) : Character(position) {
                     }
                 }
 
-                if (nextSquare == null) {
-                    // Showing dead message and putting the character in -1, -1 so it is invisible
-                    val builder = AlertDialog.Builder(gameActivity)
-                    builder.setMessage(R.string.dialog_character_fallen_message)
-                        .setTitle(R.string.dialog_character_fallen_title).show();
-                    this.position = Position(-1, -1)
-                }
                 Log.d("Dylan", otherCharacterOnNextPosition.toString())
                 if (!otherCharacterOnNextPosition) {
                     // User can move!
@@ -139,7 +120,6 @@ class Dylan (override var position : Position) : Character(position) {
                     Direction.DOWN -> Position(position.x, position.y + 1)
                     Direction.LEFT -> Position(position.x - 1, position.y)
                     Direction.RIGHT -> Position(position.x + 1, position.y)
-                    Direction.RIGHT -> Position(position.x + 1, position.y)
                 }
                 currentSquare =
                     Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
@@ -148,7 +128,16 @@ class Dylan (override var position : Position) : Character(position) {
 
 
             }
-            drawingView.invalidate()
+            Game.levels[Game.selectedLevel].movesLeft =  Game.levels[Game.selectedLevel].movesLeft -1
+
+            if (currentSquare == null) {
+                // Showing dead message and putting the character in -1, -1 so it is invisible
+                val builder = AlertDialog.Builder(gameActivity)
+                builder.setMessage(R.string.dialog_character_fallen_message)
+                    .setTitle(R.string.dialog_character_fallen_title).show()
+                this.position = Position(-1, -1)
+            }
+            drawingView.invalidate() // Updating drawingview
 
         }
     }

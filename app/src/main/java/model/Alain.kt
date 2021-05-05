@@ -27,8 +27,6 @@ class Alain(override var position : Position) : Character(position)  {
         }
     }
     override fun move(direction: Direction, drawingView: DrawingView, gameActivity: GameActivity) {
-
-
         // Computing the desired position and checking the outcome
         val nextPosition: Position =  when(direction){
             Direction.UP -> Position(position.x, position.y - 1)
@@ -36,7 +34,7 @@ class Alain(override var position : Position) : Character(position)  {
             Direction.LEFT -> Position(position.x - 1, position.y)
             Direction.RIGHT -> Position(position.x + 1, position.y)
         }
-        var otherCharacterOnNextPosition = false
+        var otherCharacterOnNextPosition = false // Will be used to check if there is a character on next pos
 
         val currentSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(position)
         val nextSquare: Square? = Game.levels[Game.selectedLevel].board.getSquareFromPosition(nextPosition)
@@ -94,13 +92,13 @@ class Alain(override var position : Position) : Character(position)  {
                 .setTitle(R.string.dialog_character_fallen_title).show();
             this.position = Position(-1, -1)
         }
-        Game.levels[Game.selectedLevel].movesLeft =  Game.levels[Game.selectedLevel].movesLeft -1
-        drawingView.invalidate()
+        Game.levels[Game.selectedLevel].movesLeft =  Game.levels[Game.selectedLevel].movesLeft -1 // Decreasing moves left
+        drawingView.invalidate() // Refresh drawingview
 
     }
 
 
-    override fun draw(canvas: Canvas?, drawingView: DrawingView) {
+    override fun drawCharacter(canvas: Canvas?, drawingView: DrawingView) {
         val paint = Paint()
 
         val drawable: Drawable = R.drawable.spikes.toDrawable() // Getting the picture

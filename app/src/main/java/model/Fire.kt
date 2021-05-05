@@ -8,7 +8,7 @@ import com.example.view.DrawingView
 import com.example.view.R
 
 class Fire(override var direction: Direction? = null, override var obstacleType: ObstacleType = ObstacleType.FIRE) : Obstacle(obstacleType, direction)  {
-    override fun draw(canvas: Canvas?, position: Position, drawingView: DrawingView){
+    override fun drawObstacle(canvas: Canvas?, position: Position, drawingView: DrawingView){
 
         var paint = Paint()
         val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.fire)
@@ -22,8 +22,8 @@ class Fire(override var direction: Direction? = null, override var obstacleType:
 
     }
     override fun actionOnObstacle() {
-        // -1 life
-        Game.levels[Game.selectedLevel].lifeBar = Game.levels[Game.selectedLevel].lifeBar -1
+        // -2 life when going on fire
+        Game.levels[Game.selectedLevel].lifeBar = Game.levels[Game.selectedLevel].lifeBar - 2
 
     }
 }
