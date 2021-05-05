@@ -12,12 +12,11 @@ class DefaultSquare(override var obstacle: Obstacle? = null, override var square
     }
 
 
-    override fun draw(
+    override fun drawSquare(
         canvas: Canvas?,
         position: Position,
         drawingView: DrawingView
     ) {
-        // Canvas: Object on which you draw on the drawingview
         // Drawing the square
         val paint = Paint()
         var color = Color.BLACK
@@ -33,7 +32,7 @@ class DefaultSquare(override var obstacle: Obstacle? = null, override var square
         canvas?.drawRect(squareShape, paint)
 
         // Drawing the obstacle
-        obstacle?.draw(canvas, position, drawingView)
+        obstacle?.drawObstacle(canvas, position, drawingView)
 
 
     }

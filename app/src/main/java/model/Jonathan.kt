@@ -17,7 +17,7 @@ import com.example.view.R
 
 class Jonathan(override var position : Position) : Character(position) {
 
-    override fun draw(canvas: Canvas?, drawingView: DrawingView) {
+    override fun drawCharacter(canvas: Canvas?, drawingView: DrawingView) {
         val paint = Paint()
 
         val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.jonathan)

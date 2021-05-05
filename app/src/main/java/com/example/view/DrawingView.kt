@@ -13,61 +13,30 @@ import model.Position
 
 class DrawingView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null,
                                              defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr){
-    val backgroundPaint = Paint()
-    //var square1: Square = Square(null)
+    private val backgroundPaint = Paint()
 
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
+        // Drawing the background
         backgroundPaint.color = Color.WHITE
         canvas?.drawRect(0F, 0F, width.toFloat(), height.toFloat(),
             backgroundPaint)
 
-       /* for(YSquares in Game.levels[Game.currentLevel].board.squares){
-            for(XSquares in YSquares){
-                XSquares?.draw(canvas, Position(i,j))
-                i+=1
-            }
-            j += 1
-        }
-
-        for(var i = 0; i < Game.levels[Game.currentLevel].board.squares.size; i++){
-                for(var j = 0; j < Game.levels[Game.currentLevel].board.squares[0].size; j++){
-                Game.levels[Game.currentLevel].board.squares[i][j]
-                var variable = Game.levels[Game.currentLevel].board.squares[i][j]
-                variable.draw(canvas, Position(i,j)
-            }
-        }*/
-
-
-
         // Iteration on the 2D matrix
         Game.levels[Game.selectedLevel].board.squares.forEachIndexed { i, arrayOfSquares ->
             arrayOfSquares.forEachIndexed { j, square ->
-                square?.draw(canvas, Position(j,i), this) // Drawing the squares
+                square?.drawSquare(canvas, Position(j,i), this) // Drawing the squares
             }
         }
-        /*
-        for(i in 0..Game.levels[Game.currentLevel].board.squares.size){
-             for(j in 0..Game.levels[Game.currentLevel].board.squares[i].size){
-                Log.d("LOL", "i : $i j :$j")
-        }
-        }*/
 
         // Drawing characters
         for(character in Game.levels[Game.selectedLevel].characters){
-            character.draw(canvas, this)
+            character.drawCharacter(canvas, this)
         }
-        //Global.level0.board.squares[0][1].draw(canvas)
-        // Updating the progressbar
-        /*var progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        var currentLife = Game.levels[Game.selectedLevel].lifeBar
-        ObjectAnimator.ofInt(progressBar, "Life", currentLife)
-            .setDuration(1000)
-            .start()*/
 
-
-        // UI SECTION
+        // Drawing the UI
         this.drawUI(canvas)
 
 
