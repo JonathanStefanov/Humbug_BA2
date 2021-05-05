@@ -35,6 +35,36 @@ public class Game : Application() {
 
                 )
             ))
+        var level2Copy: Level = Level(13,
+            3,
+            characters = arrayOf(Alain(Position(1, 0)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
+            status = LevelStatus.IN_PROGRESS,
+            board = Board(
+                arrayOf(
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), TargetSquare()),
+                    arrayOf(DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare(), null),
+                    arrayOf(TargetSquare(),DefaultSquare(obstacle = Fire()), DefaultSquare(), DefaultSquare(), DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Fire()), DefaultSquare(obstacle = Wall(Direction.LEFT))),
+                    arrayOf(null, null, DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Spikes())),
+                    arrayOf(null, null, DefaultSquare(), TargetSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare())
+
+                )
+            ))
+        var level3Copy: Level = Level(15,
+            7,
+            characters = arrayOf(Alain(Position(2, 0)), Dylan(Position(0,0)), Jonathan(Position(4,1 ))),
+            status = LevelStatus.IN_PROGRESS,
+            board = Board(
+                arrayOf(
+                    arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Fire()), DefaultSquare(), TargetSquare(obstacle = Wall(Direction.RIGHT))),
+                    arrayOf(DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(obstacle = Spikes())),
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), TargetSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(), TargetSquare(), DefaultSquare(), DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare()),
+                    arrayOf(DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)))
+
+                )
+            ))
         var level0: Level = Level(4,
             4,
             characters = arrayOf(Alain(Position(2, 4)), Dylan(Position(1,1)), Jonathan(Position(3,2 ))),
@@ -50,8 +80,8 @@ public class Game : Application() {
 
                     )
             ))
-        var level1: Level = Level(6,
-            2,
+        var level1: Level = Level(7,
+            4,
             characters = arrayOf(Alain(Position(2, 2)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
             board = Board(
@@ -62,6 +92,36 @@ public class Game : Application() {
                     arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(TargetSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
+
+                )
+            ))
+        var level2: Level = Level(13,
+            3,
+            characters = arrayOf(Alain(Position(1, 0)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
+            status = LevelStatus.IN_PROGRESS,
+            board = Board(
+                arrayOf(
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), TargetSquare()),
+                    arrayOf(DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare(), null),
+                    arrayOf(DefaultSquare(),DefaultSquare(obstacle = Fire()), DefaultSquare(), DefaultSquare(), DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Fire()), DefaultSquare(obstacle = Wall(Direction.LEFT))),
+                    arrayOf(null, null, DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Spikes())),
+                    arrayOf(null, null, DefaultSquare(), TargetSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare())
+
+                )
+            ))
+        var level3: Level = Level(15,
+            7,
+            characters = arrayOf(Alain(Position(2, 0)), Dylan(Position(0,0)), Jonathan(Position(4,1 ))),
+            status = LevelStatus.IN_PROGRESS,
+            board = Board(
+                arrayOf(
+                    arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Fire()), DefaultSquare(), TargetSquare(obstacle = Wall(Direction.RIGHT))),
+                    arrayOf(DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(obstacle = Spikes())),
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), TargetSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(), TargetSquare(), DefaultSquare(), DefaultSquare()),
+                    arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare()),
+                    arrayOf(DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)))
 
                 )
             ))
@@ -77,8 +137,8 @@ public class Game : Application() {
             )
         )*/
         var selectedLevel: Int = 0
-        var untouchedLevels: Array<Level> = arrayOf(level0Copy, level1Copy)
-        var levels: Array<Level> = arrayOf(level0, level1)
+        var untouchedLevels: Array<Level> = arrayOf(level0Copy, level1Copy, level2Copy, level3Copy)
+        var levels: Array<Level> = arrayOf(level0, level1, level2, level3)
         var selectedCharacter: Character = levels[selectedLevel].characters[0]
         var screenHeight = 500
         var screenWidth = 200

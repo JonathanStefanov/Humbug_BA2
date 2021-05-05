@@ -34,7 +34,7 @@ class Dylan (override var position : Position) : Character(position) {
         canvas?.drawBitmap(resized, x.toFloat(), y.toFloat(), paint)
 
     }
-
+    // Inverse direction for wall on next square
     private fun getOppositeDirection(direction: Direction?): Direction? {
         return when (direction) {
             Direction.DOWN -> Direction.UP
@@ -83,6 +83,7 @@ class Dylan (override var position : Position) : Character(position) {
                 getOppositeDirection(nextSquare?.obstacle?.direction) != direction && currentSquare?.squareType != SquareType.TARGET && currentSquare != null
             ) {
                 // Computing the desired position and checking the outcome
+
                 var otherCharacterOnNextPosition = false
 
                 // The obstacle on which is on the same square as the user is in a different direction as the direction where the user wants to go
@@ -99,9 +100,7 @@ class Dylan (override var position : Position) : Character(position) {
                     builder.setMessage(R.string.dialog_character_fallen_message)
                         .setTitle(R.string.dialog_character_fallen_title).show();
                     this.position = Position(-1, -1)
-                }
-                
-                if (!otherCharacterOnNextPosition) {
+                } else if (!otherCharacterOnNextPosition) {
                     // User can move!
                     this.position = nextPosition // Updating position
                     nextSquare?.actionOnSquare(this) // Action on square
@@ -136,6 +135,7 @@ class Dylan (override var position : Position) : Character(position) {
 
 
             }
+            Game.levels[Game.selectedLevel].movesLeft =  Game.levels[Game.selectedLevel].movesLeft -1
             drawingView.invalidate()
 
         }
