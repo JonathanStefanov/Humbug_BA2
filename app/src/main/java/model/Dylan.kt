@@ -134,7 +134,7 @@ class Dylan (override var position : Array<Int>) : Character(position) {
                 nextSquare =
                     level.getSquareFromPosition(nextPosition)
             }
-
+            
             level.decreaseMove()
             drawingView.invalidate()
 
