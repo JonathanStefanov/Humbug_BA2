@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import com.example.view.DrawingView
 import com.example.view.GameActivity
 import com.example.view.R
@@ -48,7 +49,7 @@ class Dylan (override var position : Array<Int>) : Character(position) {
     ) {
 
         // Computing the desired position and checking the outcome
-        val nextPosition: Array<Int> = when (direction) {
+        var nextPosition: Array<Int> = when (direction) {
             Direction.UP -> arrayOf(position[0], position[1] - 1)
             Direction.DOWN -> arrayOf(position[0], position[1]  + 1)
             Direction.LEFT -> arrayOf(position[0] - 1, position[1])
@@ -120,19 +121,20 @@ class Dylan (override var position : Array<Int>) : Character(position) {
                     break
                 }
 
-                val nextPosition: Array<Int> = when (direction) {
+                nextPosition = when (direction) {
                     Direction.UP -> arrayOf(position[0], position[1] - 1)
                     Direction.DOWN -> arrayOf(position[0], position[1]  + 1)
                     Direction.LEFT -> arrayOf(position[0] - 1, position[1])
                     Direction.RIGHT -> arrayOf(position[0] + 1, position[1] )
                 }
+
                 currentSquare =
                     level.getSquareFromPosition(position)
+
                 nextSquare =
                     level.getSquareFromPosition(nextPosition)
-
-
             }
+            
             level.decreaseMove()
             drawingView.invalidate()
 
