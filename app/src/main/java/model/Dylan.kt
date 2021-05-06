@@ -55,7 +55,7 @@ class Dylan (override var position : Array<Int>) : Character(position) {
             getOppositeDirection(nextSquare?.obstacle?.direction) == direction
         ) {
             // User hurt a wall, phones vibrates and user does not move
-            canMove = true
+            canMove = false
         } else {
             // There is a direction where user wants to go
             while (currentSquare?.obstacle?.direction != direction &&
