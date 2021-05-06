@@ -8,22 +8,22 @@ import com.example.view.DrawingView
 import com.example.view.R
 
 class Spikes(override var direction: Direction? = null, override var obstacleType: ObstacleType = ObstacleType.SPIKES) : Obstacle(obstacleType, direction)  {
-    override fun drawObstacle(canvas: Canvas?, position: Position, drawingView: DrawingView){
+    override fun drawObstacle(canvas: Canvas?, position: Array<Int>, drawingView: DrawingView){
 
         var paint = Paint()
         val img = BitmapFactory.decodeResource(drawingView.resources, R.drawable.spikes)
 
-        val x: Float =  position.convertPositionToScreen()[0]
-        val y: Float = position.convertPositionToScreen()[1] + 70
+        val x: Float =  this.convertPositionToScreen(position)[0]
+        val y: Float = this.convertPositionToScreen(position)[1] + 70
         val resized = Bitmap.createScaledBitmap(img, 200, 130, true)
-        paint.isFilterBitmap = true;
-        paint.isDither = true;
+        paint.isFilterBitmap = true
+        paint.isDither = true
         canvas?.drawBitmap(resized, x.toFloat(), y.toFloat(), paint)
 
     }
-    override fun actionOnObstacle() {
+    override fun actionOnObstacle(level: Level) {
         // -1 life
-        Game.levels[Game.selectedLevel].lifeBar = Game.levels[Game.selectedLevel].lifeBar -1
+        level.decreaseLife(1)
 
     }
 }

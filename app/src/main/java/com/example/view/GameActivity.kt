@@ -2,17 +2,11 @@ package com.example.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import model.*
 import kotlin.math.abs
 
@@ -22,6 +16,8 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     lateinit var gestureDetector: GestureDetector
     lateinit var direction: Direction
     override fun onCreate(savedInstanceState: Bundle?) {
+        var level = Game.levels[Game.selectedLevel]
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
 
@@ -43,15 +39,15 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 val selectedRadio: RadioButton = findViewById(checkedId)
                 // Change selected character dynamically
                 when(selectedRadio.text){
-                    "Alain" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
-                    "Dylan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[1]
-                    "Jonathan" -> Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[2]
+                    "Alain" -> Game.selectedCharacter = level.characters[0]
+                    "Dylan" -> Game.selectedCharacter = level.characters[1]
+                    "Jonathan" -> Game.selectedCharacter = level.characters[2]
                 }
 
             })
 
         // Updating default selected character
-        Game.selectedCharacter = Game.levels[Game.selectedLevel].characters[0]
+        Game.selectedCharacter = level.characters[0]
 
 
 
@@ -75,6 +71,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     // Swipe checking
     override fun onFling(moveEvent: MotionEvent, downEvent: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        var level = Game.levels[Game.selectedLevel]
         var result: Boolean = false
         var diffY: Float = moveEvent.y - (downEvent.y)
         var diffX: Float = moveEvent.x - (downEvent.x)
@@ -120,10 +117,16 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         // Calling the move function of the selected character in the direction of the swipe
         if (direction != null) {
-            Game.selectedCharacter.move(direction, drawingView, this)
+            Game.selectedCharacter.move(direction, drawingView, this, level)
         }
-        checkStatus() // Checking the status (won/lost) everytime the user makes a swipe
-
+        var levelStatus = level.checkStatus()
+        when(levelStatus){
+            LevelStatus.FAIL -> {
+                startLostActivity()
+                Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
+            }
+            LevelStatus.WON -> startWinActivity()
+        }
 
         return result
     }
@@ -142,78 +145,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     private fun startLostActivity(){
         val intent = Intent(this, LostActivity::class.java)
         this.startActivity(intent)
-    }
-
-
-    private fun checkCharacters() {
-        Handler().postDelayed(
-            {
-                // Checking if there still is a character on board
-                var charactersOnBoard = false
-                Game.levels[Game.selectedLevel].characters.forEach {character: Character ->
-                    if(character.position.x != -1 && character.position.y != -1){
-                        charactersOnBoard = true
-                    }
-                }
-                // Changing charactersOnBoard accordingly  accordingly
-                Game.levels[Game.selectedLevel].charactersOnBoard = charactersOnBoard
-            },
-            10 // Function will be executed 10ms after the checkSquares, otherwise it causes bug
-        )
-
-    }
-
-    private fun checkSquares() {
-        // Checking is there still are target squares that haven't been claimed
-        var targetSquareOnBoard = false
-        Game.levels[Game.selectedLevel].board.squares.forEach { arrayOfSquares ->
-            arrayOfSquares.forEach { square ->
-                if(square?.squareType == SquareType.TARGET){
-                    targetSquareOnBoard = true
-                }
-            }
-        }
-        // Changing squaresOnBoard accordingly
-        Game.levels[Game.selectedLevel].targetSquaresOnBoard = targetSquareOnBoard
-    }
-
-
-    private fun wonLevel(){
-        // Launching WonActivity
-        startWinActivity()
-        Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
-    }
-    private fun lostLevel(){
-        // Launching LostActivity
-        startLostActivity()
-        Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
-    }
-
-
-    private fun checkStatus() {
-
-        // Checking at the same time if there still are characters on the board and if there
-        // are still unclaimed target squares using Kotlin coroutines
-        runBlocking {
-            launch { checkSquares() }
-            launch { checkCharacters() }
-        }
-
-        if (Game.levels[Game.selectedLevel].lifeBar > 0 && Game.levels[Game.selectedLevel].movesLeft > 0) {
-            if (Game.levels[Game.selectedLevel].charactersOnBoard) {
-                // If there is characters on board, check if all squares have been claimed
-                if (!Game.levels[Game.selectedLevel].targetSquaresOnBoard) {
-                    // If there is no target squares anymore, it me+ans that they have all been claimed
-                    Game.levels[Game.selectedLevel].status = LevelStatus.WON
-                    wonLevel()
-                }
-            } else {
-                lostLevel()
-            }
-        } else {
-            lostLevel()
-
-        }
     }
 
 

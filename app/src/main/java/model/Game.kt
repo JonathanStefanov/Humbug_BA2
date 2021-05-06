@@ -2,15 +2,15 @@ package model
 
 import android.app.Application
 
-public class Game : Application() {
+class Game : Application() {
     companion object {
         @JvmField
         // creating all the levels + their copy because deep copy hardly feasible in Kotlin
         var level0Copy: Level = Level(4,
             4,
-            characters = arrayOf(Alain(Position(2, 4)), Dylan(Position(1,1)), Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(arrayOf(2, 4)), Dylan(arrayOf(1,1)), Jonathan(arrayOf(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), DefaultSquare(), null, null, DefaultSquare()),
@@ -20,12 +20,12 @@ public class Game : Application() {
                     arrayOf(DefaultSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
 
                 )
-            ))
+            )
         var level1Copy: Level = Level(6,
             5,
-            characters = arrayOf(Alain(Position(2, 2)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(arrayOf(2, 2)), Dylan(arrayOf(1,3)), Jonathan(arrayOf(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(null, DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(TargetSquare(), DefaultSquare(), null, null, DefaultSquare()),
@@ -33,13 +33,13 @@ public class Game : Application() {
                     arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
-                )
+
             ))
         var level2Copy: Level = Level(13,
             3,
-            characters = arrayOf(Alain(Position(1, 0)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(arrayOf(1, 0)), Dylan(arrayOf(1,3)), Jonathan(arrayOf(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), TargetSquare()),
                     arrayOf(DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare(), null),
@@ -49,12 +49,12 @@ public class Game : Application() {
                     arrayOf(null, null, DefaultSquare(), TargetSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare())
 
                 )
-            ))
+            )
         var level3Copy: Level = Level(15,
             7,
-            characters = arrayOf(Alain(Position(3, 0)), Dylan(Position(0,0)), Jonathan(Position(4,5 ))),
+            characters = arrayOf(Alain(arrayOf(3, 0)), Dylan(arrayOf(0,0)), Jonathan(arrayOf(4,5 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Fire()), DefaultSquare(), TargetSquare(obstacle = Wall(Direction.RIGHT))),
                     arrayOf(DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(obstacle = Spikes())),
@@ -63,13 +63,12 @@ public class Game : Application() {
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare()),
                     arrayOf(DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)))
 
-                )
             ))
         var level0: Level = Level(4,
             4,
-            characters = arrayOf(Alain(Position(2, 4)), Dylan(Position(1,1)), Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(arrayOf(2, 4)), Dylan(arrayOf(1,1)), Jonathan(arrayOf(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), DefaultSquare(), null, null, DefaultSquare()),
@@ -77,14 +76,12 @@ public class Game : Application() {
                     arrayOf(null, DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
-
-                )
             ))
         var level1: Level = Level(7,
             4,
-            characters = arrayOf(Alain(Position(2, 2)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(arrayOf(2, 2)), Dylan(arrayOf(1,3)), Jonathan(arrayOf(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(null, DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(TargetSquare(), DefaultSquare(), null, null, DefaultSquare()),
@@ -93,13 +90,12 @@ public class Game : Application() {
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare()),
                     arrayOf(DefaultSquare(), TargetSquare(), DefaultSquare(obstacle = Spikes()), null, DefaultSquare())
 
-                )
             ))
         var level2: Level = Level(13,
             3,
-            characters = arrayOf(Alain(Position(1, 0)), Dylan(Position(1,3)), Jonathan(Position(3,2 ))),
+            characters = arrayOf(Alain(arrayOf(1, 0)), Dylan(arrayOf(1,3)), Jonathan(arrayOf(3,2 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.UP)), TargetSquare()),
                     arrayOf(DefaultSquare(obstacle = Spikes()), DefaultSquare(), null, DefaultSquare(), null),
@@ -107,14 +103,12 @@ public class Game : Application() {
                     arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Fire()), DefaultSquare(obstacle = Wall(Direction.LEFT))),
                     arrayOf(null, null, DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Spikes())),
                     arrayOf(null, null, DefaultSquare(), TargetSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare())
-
-                )
             ))
         var level3: Level = Level(15,
             7,
-            characters = arrayOf(Alain(Position(3, 0)), Dylan(Position(0,0)), Jonathan(Position(4,5 ))),
+            characters = arrayOf(Alain(arrayOf(3, 0)), Dylan(arrayOf(0,0)), Jonathan(arrayOf(4,5 ))),
             status = LevelStatus.IN_PROGRESS,
-            board = Board(
+            squares =
                 arrayOf(
                     arrayOf(DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Fire()), DefaultSquare(), TargetSquare(obstacle = Wall(Direction.RIGHT))),
                     arrayOf(DefaultSquare(obstacle = Wall(Direction.UP)), DefaultSquare(), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.RIGHT)), DefaultSquare(obstacle = Spikes())),
@@ -123,7 +117,6 @@ public class Game : Application() {
                     arrayOf(DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)), DefaultSquare()),
                     arrayOf(DefaultSquare(obstacle = Wall(Direction.LEFT)), DefaultSquare(), DefaultSquare(obstacle = Spikes()), DefaultSquare(), DefaultSquare(obstacle = Wall(Direction.DOWN)))
 
-                )
             ))
 
         var selectedLevel: Int = 0

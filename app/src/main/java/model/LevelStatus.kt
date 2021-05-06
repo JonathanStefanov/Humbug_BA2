@@ -1,5 +1,5 @@
 package model
 
 enum class LevelStatus{
-    WON, IN_PROGRESS
+    WON, IN_PROGRESS, FAIL
 }

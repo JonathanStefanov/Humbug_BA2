@@ -8,7 +8,7 @@ import com.example.view.DrawingView
 
 class Wall(override var direction: Direction?, override var obstacleType: ObstacleType = ObstacleType.WALL) : Obstacle(obstacleType, direction) {
 
-    override fun drawObstacle(canvas: Canvas?, position: Position, drawingView: DrawingView){
+    override fun drawObstacle(canvas: Canvas?, position: Array<Int>, drawingView: DrawingView){
         val paint = Paint()
         var color = Color.GREEN
         // Changing the shape depending on the direction
@@ -16,37 +16,37 @@ class Wall(override var direction: Direction?, override var obstacleType: Obstac
         when(direction){
             Direction.UP -> {
                 val shape = RectF(
-                    position.convertPositionToScreen()[0],
-                    position.convertPositionToScreen()[1],
-                    position.convertPositionToScreen()[0] + 200f,
-                    position.convertPositionToScreen()[1] + 50f
+                    this.convertPositionToScreen(position)[0],
+                    this.convertPositionToScreen(position)[1],
+                    this.convertPositionToScreen(position)[0] + 200f,
+                    this.convertPositionToScreen(position)[1] + 50f
                 )
                 canvas?.drawRect(shape, paint)
             }
             Direction.DOWN -> {
                 val shape = RectF(
-                    position.convertPositionToScreen()[0] ,
-                    position.convertPositionToScreen()[1] + 150f,
-                    position.convertPositionToScreen()[0] + 200f,
-                    position.convertPositionToScreen()[1] + 200f
+                    this.convertPositionToScreen(position)[0] ,
+                    this.convertPositionToScreen(position)[1] + 150f,
+                    this.convertPositionToScreen(position)[0] + 200f,
+                    this.convertPositionToScreen(position)[1] + 200f
                 )
                 canvas?.drawRect(shape, paint)
             }
             Direction.RIGHT -> {
                 val shape = RectF(
-                    position.convertPositionToScreen()[0] + 150 ,
-                    position.convertPositionToScreen()[1],
-                    position.convertPositionToScreen()[0] + 200f,
-                    position.convertPositionToScreen()[1] + 200f
+                    this.convertPositionToScreen(position)[0] + 150 ,
+                    this.convertPositionToScreen(position)[1],
+                    this.convertPositionToScreen(position)[0] + 200f,
+                    this.convertPositionToScreen(position)[1] + 200f
                 )
                 canvas?.drawRect(shape, paint)
             }
             Direction.LEFT -> {
                 val shape = RectF(
-                    position.convertPositionToScreen()[0] ,
-                    position.convertPositionToScreen()[1],
-                    position.convertPositionToScreen()[0] + 50f,
-                    position.convertPositionToScreen()[1] + 200f
+                    this.convertPositionToScreen(position)[0] ,
+                    this.convertPositionToScreen(position)[1],
+                    this.convertPositionToScreen(position)[0] + 50f,
+                    this.convertPositionToScreen(position)[1] + 200f
                 )
                 canvas?.drawRect(shape, paint)
             }
@@ -57,7 +57,6 @@ class Wall(override var direction: Direction?, override var obstacleType: Obstac
 
     }
 
-    override fun actionOnObstacle() {}
-
+    override fun actionOnObstacle(level: Level) {}
 
 }
