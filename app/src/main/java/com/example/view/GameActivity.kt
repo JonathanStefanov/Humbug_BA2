@@ -1,7 +1,12 @@
 package com.example.view
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.RadioButton
@@ -9,15 +14,16 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import model.*
 import kotlin.math.abs
+import kotlin.properties.Delegates
 
 
 class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     lateinit var drawingView: DrawingView
     lateinit var gestureDetector: GestureDetector
     lateinit var direction: Direction
-    override fun onCreate(savedInstanceState: Bundle?) {
-        var level = Game.levels[Game.selectedLevel]
+    var level = Game.levels[Game.selectedLevel]
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
 
@@ -34,17 +40,16 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         // Checking which Character is selected
         val radioGroup: RadioGroup = findViewById(R.id.radio_group)
-        radioGroup.setOnCheckedChangeListener(
-            RadioGroup.OnCheckedChangeListener { _, checkedId ->
-                val selectedRadio: RadioButton = findViewById(checkedId)
-                // Change selected character dynamically
-                when(selectedRadio.text){
-                    "Alain" -> Game.selectedCharacter = level.characters[0]
-                    "Dylan" -> Game.selectedCharacter = level.characters[1]
-                    "Jonathan" -> Game.selectedCharacter = level.characters[2]
-                }
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val selectedRadio: RadioButton = findViewById(checkedId)
+            // Change selected character dynamically
+            when(selectedRadio.text){
+                "Alain" -> Game.selectedCharacter = level.characters[0]
+                "Dylan" -> Game.selectedCharacter = level.characters[1]
+                "Jonathan" -> Game.selectedCharacter = level.characters[2]
+            }
 
-            })
+        }
 
         // Updating default selected character
         Game.selectedCharacter = level.characters[0]
@@ -71,7 +76,6 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     // Swipe checking
     override fun onFling(moveEvent: MotionEvent, downEvent: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-        var level = Game.levels[Game.selectedLevel]
         var result: Boolean = false
         var diffY: Float = moveEvent.y - (downEvent.y)
         var diffX: Float = moveEvent.x - (downEvent.x)
@@ -117,7 +121,27 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         // Calling the move function of the selected character in the direction of the swipe
         if (direction != null) {
-            Game.selectedCharacter.move(direction, drawingView, this, level)
+
+            var canMove:Boolean = Game.selectedCharacter.move(direction, level)
+            if(canMove){
+                level.decreaseMove()
+                drawingView.invalidate()
+            }
+            else{
+                // cannot move
+                val vibrator =
+                    getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                if (Build.VERSION.SDK_INT >= 26) {
+                    vibrator.vibrate(
+                        VibrationEffect.createOneShot(
+                            200,
+                            VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
+                } else {
+                    vibrator.vibrate(200)
+                }
+            }
         }
         var levelStatus = level.checkStatus()
         when(levelStatus){
@@ -147,9 +171,9 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         this.startActivity(intent)
     }
 
-
-
-
-
-
 }
+
+
+
+
+

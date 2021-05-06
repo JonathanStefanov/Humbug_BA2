@@ -31,22 +31,12 @@ class Dylan (override var position : Array<Int>) : Character(position) {
 
     }
 
-    private fun getOppositeDirection(direction: Direction?): Direction? {
-        return when (direction) {
-            Direction.DOWN -> Direction.UP
-            Direction.LEFT -> Direction.RIGHT
-            Direction.UP -> Direction.DOWN
-            Direction.RIGHT -> Direction.LEFT
-            else -> return null
-        }
-    }
 
     override fun move(
         direction: Direction,
-        drawingView: DrawingView,
-        gameActivity: GameActivity,
         level: Level
-    ) {
+    ): Boolean {
+        var canMove = false
 
         // Computing the desired position and checking the outcome
         var nextPosition: Array<Int> = when (direction) {
@@ -65,18 +55,7 @@ class Dylan (override var position : Array<Int>) : Character(position) {
             getOppositeDirection(nextSquare?.obstacle?.direction) == direction
         ) {
             // User hurt a wall, phones vibrates and user does not move
-            val vibrator =
-                gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= 26) {
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        200,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            } else {
-                vibrator.vibrate(200)
-            }
+            canMove = true
         } else {
             // There is a direction where user wants to go
             while (currentSquare?.obstacle?.direction != direction &&
@@ -96,29 +75,16 @@ class Dylan (override var position : Array<Int>) : Character(position) {
 
                 if (nextSquare == null) {
                     // Showing dead message and putting the character in -1, -1 so it is invisible
-                    val builder = AlertDialog.Builder(gameActivity)
-                    builder.setMessage(R.string.dialog_character_fallen_message)
-                        .setTitle(R.string.dialog_character_fallen_title).show();
+                    canMove = true
                     this.position = arrayOf(-1, -1)
                 } else if (!otherCharacterOnNextPosition) {
                     // User can move!
+                    canMove = true
                     this.position = nextPosition // Updating position
                     nextSquare?.actionOnSquare(this, level) // Action on square
                 } else {
                     // User hurt a character or wall, phones vibrates and user does not move
-                    val vibrator =
-                        gameActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                    if (Build.VERSION.SDK_INT >= 26) {
-                        vibrator.vibrate(
-                            VibrationEffect.createOneShot(
-                                200,
-                                VibrationEffect.DEFAULT_AMPLITUDE
-                            )
-                        )
-                    } else {
-                        vibrator.vibrate(200)
-                    }
-                    break
+                    canMove = false
                 }
 
                 nextPosition = when (direction) {
@@ -135,9 +101,9 @@ class Dylan (override var position : Array<Int>) : Character(position) {
                     level.getSquareFromPosition(nextPosition)
             }
             
-            level.decreaseMove()
-            drawingView.invalidate()
 
         }
+    return canMove
     }
+
 }
