@@ -47,7 +47,8 @@ class Alain(override var position : Array<Int>) : Character(position)  {
             }
         }
 
-        if (nextSquare == null) {
+        if (nextSquare == null && !otherCharacterOnNextPosition && currentSquare?.obstacle?.direction != direction &&
+                getOppositeDirection(nextSquare?.obstacle?.direction) != direction) {
             // Showing dead message and putting the character in -1, -1 so it is invisible
             val builder = AlertDialog.Builder(gameActivity)
             builder.setMessage(R.string.dialog_character_fallen_message)
