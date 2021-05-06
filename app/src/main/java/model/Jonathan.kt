@@ -51,7 +51,8 @@ class Jonathan(override var position : Array<Int>) : Character(position)  {
             }
         }
 
-        if (nextSquare == null) {
+        if (nextSquare == null && !otherCharacterOnNextPosition && currentSquare?.obstacle?.direction != direction &&
+            getOppositeDirection(nextSquare?.obstacle?.direction) != direction) {
             // dead and putting the character in -1, -1 so it is invisible
             canMove = true
             this.position = arrayOf(-1, -1)
