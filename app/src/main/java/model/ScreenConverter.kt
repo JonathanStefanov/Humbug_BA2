@@ -1,6 +1,6 @@
 package model
 
-interface ScreenConvert {
+interface ScreenConverter {
     fun convertPositionToScreen(position: Array<Int>): Array<Float> {
         // Width/ Height spacing got from Game object
         val x = (Game.widthSpacing * position[0]).toFloat()
