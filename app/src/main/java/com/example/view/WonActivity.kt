@@ -18,6 +18,9 @@ class WonActivity : AppCompatActivity() {
         }
         buttonNextLevel.setOnClickListener {
             Game.selectedLevel += 1
+            if (Game.selectedLevel > 3) {
+                Game.selectedLevel = 0
+        }
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
         }
