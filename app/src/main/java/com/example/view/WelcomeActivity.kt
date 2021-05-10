@@ -14,12 +14,10 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        val ring = MediaPlayer.create(this,R.raw.welcome);
-        ring.start()
-
-
         val buttonwelcome: Button = findViewById(R.id.button_play)
         buttonwelcome.setOnClickListener {
+            val ring = MediaPlayer.create(this,R.raw.welcome)
+            ring.start()
             val intent = Intent(this, LevelSelectActivity::class.java)
             startActivity(intent)
         }
