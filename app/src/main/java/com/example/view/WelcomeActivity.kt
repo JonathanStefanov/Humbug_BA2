@@ -34,7 +34,7 @@ class WelcomeActivity : AppCompatActivity() {
         var height = displayMetrics.heightPixels
 
 
-        Game.screenHeight = (height*0.6).toInt() // to leave place to the UI
+        Game.screenHeight = (height*0.7).toInt() // to leave place to the UI
         Game.screenWidth = width
 
         // Getting the spacing needed between squares

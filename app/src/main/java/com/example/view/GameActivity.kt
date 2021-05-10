@@ -85,7 +85,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         // Checking in which way the swipe has occurred
         if(abs(diffX) > abs(diffY)){
             // Left or right swipe check
-            if(abs(diffX) > 100 && abs(velocityX) > 100){
+            if(abs(diffX) > 60 && abs(velocityX) > 50){
                 // TODO swipe right
                 if(diffX > 0){
                     // left SWIPE
@@ -103,7 +103,7 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
         else{
             // Up and down swipe
-            if(abs(diffY) > 100 && abs(velocityY) > 100){
+            if(abs(diffY) > 60 && abs(velocityY) > 50){
                 if(diffY > 0){
                     // UP SWIPE
                     direction = Direction.UP
@@ -146,8 +146,8 @@ class GameActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         var levelStatus = level.checkStatus()
         when(levelStatus){
             LevelStatus.FAIL -> {
-                startLostActivity()
                 Game.levels[Game.selectedLevel] = Game.untouchedLevels[Game.selectedLevel] // Reset level
+                startLostActivity()
             }
             LevelStatus.WON -> startWinActivity()
         }
